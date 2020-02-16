@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/ansible/</loc>
+        <lastmod>2020-02-16T10:52:08.074Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/kafka-problem/</loc>
         <lastmod>2020-02-16T07:56:34.614Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -17,14 +25,6 @@
     <url>
         <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/Linux-websites/</loc>
         <lastmod>2020-02-16T07:56:18.331Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/ansible/</loc>
-        <lastmod>2020-02-16T06:42:22.986Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
