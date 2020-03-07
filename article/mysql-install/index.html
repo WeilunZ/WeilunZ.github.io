@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          一些有趣的Linux网站 - 周伟伦 | Blog
+          Centos7.3安装Mysql8 - 周伟伦 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://&lt;www class=&quot;WeilunZhou&quot;&gt;  &lt;/www&gt;.com/article/Linux-websites/">
+    <link rel="canonical" href="http://&lt;www class=&quot;WeilunZhou&quot;&gt;  &lt;/www&gt;.com/article/mysql-install/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                              <a class="tag" href="/tags/#Mysql" title="Mysql">Mysql</a>
                             
                         </div>
-                        <h1>一些有趣的Linux网站</h1>
+                        <h1>Centos7.3安装Mysql8</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by WeilunZhou on
-                            2019-10-07
+                            2020-03-07
                         </span>
                     </div>
                 
@@ -212,24 +212,48 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="一些有趣的linux网站">一些有趣的Linux网站</h2>
+                <h2 id="centos7安装mysql8">Centos7安装Mysql8</h2>
+<h3 id="1安装">1.安装</h3>
 <ul>
-<li><a href="https://github.com/aleksandar-todorovic/awesome-linux" target="_blank" rel="noopener">awesome-linux列表</a> - github 上 awesome-linux 列表，里边各种linux相关的网站</li>
-<li><a href="https://github.com/geekwolf/free-books/blob/master/free-programming-books.md" target="_blank" rel="noopener">free-programming-books</a> - 很多开发相关的免费书籍</li>
-<li><a href="https://bootlin.com/docs/" target="_blank" rel="noopener">bootlin.com</a> - linux 内核相关
-<ul>
-<li><a href="https://elixir.bootlin.com/linux/v5.4/source" target="_blank" rel="noopener">elixir.bootlin.com</a> - linux kernal 源码浏览</li>
-</ul>
+<li>
+<p>系统版本：Centos7</p>
 </li>
-<li><a href="https://distrowatch.com/" target="_blank" rel="noopener">distrowatch.com</a> - linux 各发行版的信息</li>
-<li><a href="https://www.commandlinefu.com/commands/browse" target="_blank" rel="noopener">commandlinefu.com</a> - linux 命令收集网站</li>
-<li><a href="https://explainshell.com/#" target="_blank" rel="noopener">explainshell.com</a> - 解释shell命令的网站</li>
-<li><a href="https://www.shortcutfoo.com/" target="_blank" rel="noopener">shortcutfoo.com</a> - 练习shortcut的网站</li>
-<li><a href="http://vim-adventures.com/" target="_blank" rel="noopener">vim-adventures.com</a> - 通过RPG游戏来联系VIM的使用</li>
-<li><a href="http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html" target="_blank" rel="noopener">Bash Guide for Beginners</a> - Bash Guide for Beginners</li>
-<li><a href="https://coolshell.cn/" target="_blank" rel="noopener">coolshell网站</a> - 酷壳</li>
-<li><a href="https://github.com/peco/peco" target="_blank" rel="noopener">https://github.com/peco/peco</a> - 非常简单好用的交互式过滤工具</li>
+<li>
+<p>Mysql版本：Mysql8.0</p>
+</li>
+<li>
+<p>安装方式：yum</p>
+</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm </span><br><span class="line"></span><br><span class="line">sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span><br><span class="line"></span><br><span class="line">sudo yum install mysql-community-server</span><br><span class="line"></span><br><span class="line">sudo systemctl start mysqld.service</span><br><span class="line"></span><br><span class="line">sudo systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
+<h4 id="切换版本">切换版本</h4>
+<p>如果想要更换版本，可以先查看当前mysql yum repository中所有mysql版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum repolist all | grep mysql</span><br></pre></td></tr></table></figure>
+<p>切换版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum-config-manager --<span class="built_in">disable</span> mysql80-community</span><br><span class="line">sudo yum-config-manager --<span class="built_in">enable</span> mysql57-community</span><br></pre></td></tr></table></figure>
+<h3 id="2修改密码">2.修改密码</h3>
+<ol>
+<li>Mysql第一次启动后会创建超级管理员账号<code>root@localhost</code>，初始密码存储在日志文件中：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grep `temporary password` /var/<span class="built_in">log</span>/mysqld.log</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改默认密码</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line"><span class="comment"># &gt; password: &lt;输入你的初始密码&gt;</span></span><br><span class="line">alter user <span class="string">'root'</span>@<span class="string">'localhost'</span> identified by <span class="string">'&lt;new password&gt;'</span></span><br><span class="line"><span class="comment"># 注意这里的新密码需要符合策略，包含数字、大小写字母、特殊字符。</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改默认策略</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; <span class="built_in">set</span> global validate_password_policy=0;</span><br></pre></td></tr></table></figure>
+<p>此时可能报错提示</p>
+<p><code>ERROR 1193 (HY000): Unknown system variable 'validate_password_policy'</code></p>
+<p>原因是<code>validate_password_policy</code>默认没有被激活，解决如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; select plugin_name, plugin_status from information_schema.plugins <span class="built_in">where</span> plugin_name like <span class="string">'validate%'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; install plugin validate_password soname <span class="string">'validate_password.so'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; mysql&gt; select plugin_name, plugin_status from information_schema.plugins <span class="built_in">where</span> plugin_name like <span class="string">'validate%'</span>;</span><br><span class="line"></span><br><span class="line">SHOW VARIABLES LIKE <span class="string">'validate_password%'</span>;</span><br></pre></td></tr></table></figure>
+<p>首先查找plugin中是否包含validatexxx，返回empty set说明不包含，安装后即可，接着重新运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; <span class="built_in">set</span> global validate_password_policy=0;</span><br><span class="line"></span><br><span class="line">mysql &gt; <span class="built_in">set</span> global validate_password_length=8;</span><br><span class="line"></span><br><span class="line">mysql &gt; alter user <span class="string">'root'</span>@<span class="string">'localhost'</span> identified by <span class="string">'12345678'</span>;</span><br></pre></td></tr></table></figure>
+<p>修改成功</p>
+<h3 id="3允许用户远程访问">3.允许用户远程访问</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; CREATE USER <span class="string">'test_user'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'12345678'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; GRANT ALL ON *.* TO <span class="string">'test_user'</span>@<span class="string">'%'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; ALTER USER <span class="string">'test_user'</span>@<span class="string">'%'</span> IDENTIFIED WITH mysql_native_password BY <span class="string">'12345678'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<p>完事后IDE下测试数据库连接成功！</p>
 
                 
 
@@ -237,13 +261,9 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/systemd/" data-toggle="tooltip" data-placement="top" title="Systemd使用技巧">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/Docker_commands/" data-toggle="tooltip" data-placement="top" title="Docker命令快速入门">Next Post &rarr;</a>
+                            <a href="/article/stdout&stderr/" data-toggle="tooltip" data-placement="top" title="/dev/stdout和/dev/stderr是什么？">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -299,7 +319,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一些有趣的linux网站"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E00;&#x4E9B;&#x6709;&#x8DA3;&#x7684;Linux&#x7F51;&#x7AD9;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#centos7安装mysql8"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Centos7&#x5B89;&#x88C5;Mysql8</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1安装"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1.&#x5B89;&#x88C5;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#切换版本"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">&#x5207;&#x6362;&#x7248;&#x672C;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2修改密码"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">2.&#x4FEE;&#x6539;&#x5BC6;&#x7801;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#3允许用户远程访问"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">3.&#x5141;&#x8BB8;&#x7528;&#x6237;&#x8FDC;&#x7A0B;&#x8BBF;&#x95EE;</span></a></li></ol></li></ol>
         
         </div>
       </aside>
@@ -319,7 +339,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                          <a class="tag" href="/tags/#Mysql" title="Mysql">Mysql</a>
                         
                     </div>
                 </section>

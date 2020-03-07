@@ -7,8 +7,32 @@
     </url>
 
     <url>
+        <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/mysql-install/</loc>
+        <lastmod>2020-03-07T12:55:00.180Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/stdout&stderr/</loc>
+        <lastmod>2020-03-07T04:17:39.096Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/Spring%E6%BA%90%E7%A0%81%E8%A7%A3%E8%AF%BB(%E4%B8%80)/</loc>
+        <lastmod>2020-02-22T13:23:44.909Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/maven-multi-mirror-md/</loc>
-        <lastmod>2020-02-20T12:39:22.650Z</lastmod>
+        <lastmod>2020-02-22T03:44:33.820Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

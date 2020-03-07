@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          一些有趣的Linux网站 - 周伟伦 | Blog
+          Spring源码阅读笔记(一) - 周伟伦 | Blog
         
     </title>
 
-    <link rel="canonical" href="http://&lt;www class=&quot;WeilunZhou&quot;&gt;  &lt;/www&gt;.com/article/Linux-websites/">
+    <link rel="canonical" href="http://&lt;www class=&quot;WeilunZhou&quot;&gt;  &lt;/www&gt;.com/article/Spring源码解读(一)/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                              <a class="tag" href="/tags/#spring" title="spring">spring</a>
                             
                         </div>
-                        <h1>一些有趣的Linux网站</h1>
+                        <h1>Spring源码阅读笔记(一)</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by WeilunZhou on
-                            2019-10-07
+                            2019-10-03
                         </span>
                     </div>
                 
@@ -212,24 +212,48 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h2 id="一些有趣的linux网站">一些有趣的Linux网站</h2>
+                <h2 id="spring源码阅读笔记一">Spring源码阅读笔记(一)</h2>
+<h3 id="1-bean工程">1. Bean工程</h3>
+<h4 id="1-defaultlistenablebeanfactory">(1) DefaultListenableBeanFactory</h4>
+<p><img src="/img/article/spring/DefaultListableBeanFactory.png" alt=""></p>
+<h4 id="2-xmlbeandefinitionreader">(2) XmlBeanDefinitionReader</h4>
+<p>主要包含以下几步的处理：</p>
 <ul>
-<li><a href="https://github.com/aleksandar-todorovic/awesome-linux" target="_blank" rel="noopener">awesome-linux列表</a> - github 上 awesome-linux 列表，里边各种linux相关的网站</li>
-<li><a href="https://github.com/geekwolf/free-books/blob/master/free-programming-books.md" target="_blank" rel="noopener">free-programming-books</a> - 很多开发相关的免费书籍</li>
-<li><a href="https://bootlin.com/docs/" target="_blank" rel="noopener">bootlin.com</a> - linux 内核相关
+<li>通过继承自AbstractBeanDefinitionReader中的方法，来使用ResourceLoader将资源文件路径转换为对应的Resoure文件；</li>
+<li>通过DocumentLoader对Resource文件进行转换，将Resource文件转换为Document文件；</li>
+<li>通过实现接口BeanDefinitionDocumentReader的DefaultBeanDefinitionDocumentReader类对Document进行解析，并使用BeanDefinitionParserDelegate对Element进行解析。</li>
+</ul>
+<h4 id="3-xmlbeanfactory">(3) XmlBeanFactory</h4>
 <ul>
-<li><a href="https://elixir.bootlin.com/linux/v5.4/source" target="_blank" rel="noopener">elixir.bootlin.com</a> - linux kernal 源码浏览</li>
+<li>构造Resource资源文件的实例对象</li>
+<li><code>this.reader.loadBeanDefinitions(resource)</code>完成资源加载</li>
+</ul>
+<h5 id="resource是如何封装的呢"><code>Resource是如何封装的呢？</code></h5>
+<p>Resource接口抽象了所有Spring内部使用到的底层资源，包括：File/URL/Classpath等，并且提供了存在性、可读性、是否处于打开状态等方法，提供了不同资源到URL/URI/File类型的转换，以及基于当前资源创建一个相对资源的方法。</p>
+<ul>
+<li>
+<p><code>loadBeanDefinitions</code> —&gt; <code>doBeanDefinitions</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">			Document doc = doLoadDocument(inputSource, resource);</span><br><span class="line">			<span class="keyword">int</span> count = registerBeanDefinitions(doc, resource);</span><br><span class="line">			<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">				logger.debug(<span class="string">"Loaded "</span> + count + <span class="string">" bean definitions from "</span> + resource);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> count;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (BeanDefinitionStoreException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> ex;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (SAXParseException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> XmlBeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"Line "</span> + ex.getLineNumber() + <span class="string">" in XML document from "</span> + resource + <span class="string">" is invalid"</span>, ex);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (SAXException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> XmlBeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"XML document from "</span> + resource + <span class="string">" is invalid"</span>, ex);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (ParserConfigurationException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"Parser configuration exception parsing XML from "</span> + resource, ex);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"IOException parsing XML document from "</span> + resource, ex);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"Unexpected exception parsing XML document from "</span> + resource, ex);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<p><code>doBeanDefinitions</code>的主要工作：</p>
+<ul>
+<li>
+<p>获取XML的验证模式</p>
+</li>
+<li>
+<p>加载XML文件，并得到对应的Document；</p>
+</li>
+<li>
+<p>根据返回的Document注册Bean信息。</p>
+</li>
 </ul>
 </li>
-<li><a href="https://distrowatch.com/" target="_blank" rel="noopener">distrowatch.com</a> - linux 各发行版的信息</li>
-<li><a href="https://www.commandlinefu.com/commands/browse" target="_blank" rel="noopener">commandlinefu.com</a> - linux 命令收集网站</li>
-<li><a href="https://explainshell.com/#" target="_blank" rel="noopener">explainshell.com</a> - 解释shell命令的网站</li>
-<li><a href="https://www.shortcutfoo.com/" target="_blank" rel="noopener">shortcutfoo.com</a> - 练习shortcut的网站</li>
-<li><a href="http://vim-adventures.com/" target="_blank" rel="noopener">vim-adventures.com</a> - 通过RPG游戏来联系VIM的使用</li>
-<li><a href="http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html" target="_blank" rel="noopener">Bash Guide for Beginners</a> - Bash Guide for Beginners</li>
-<li><a href="https://coolshell.cn/" target="_blank" rel="noopener">coolshell网站</a> - 酷壳</li>
-<li><a href="https://github.com/peco/peco" target="_blank" rel="noopener">https://github.com/peco/peco</a> - 非常简单好用的交互式过滤工具</li>
 </ul>
+<h5 id="获取xml的验证模式">获取XML的验证模式</h5>
+<p>XML文件的验证模式保证了XML文件的正确性，常用的有DTD和XSD两种。</p>
+<p>Spring用来检测验证模式的方法就是判断文本中是否包含DOCTYPE，如果包含就是DTD，否则就是XSD。</p>
+<h5 id="获取document">获取Document</h5>
+<p>通过SAX解析XML文档，并且EntityResolver使得程序能够在项目本身中寻找DTD声明，避免网络下载的漫长时间或网络中断造成的报错。</p>
+<h5 id="根据document注册bean信息">根据Document注册Bean信息</h5>
 
                 
 
@@ -238,12 +262,12 @@
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/systemd/" data-toggle="tooltip" data-placement="top" title="Systemd使用技巧">&larr; Previous Post</a>
+                            <a href="/article/Docker_commands/" data-toggle="tooltip" data-placement="top" title="Docker命令快速入门">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/Docker_commands/" data-toggle="tooltip" data-placement="top" title="Docker命令快速入门">Next Post &rarr;</a>
+                            <a href="/article/ansible/" data-toggle="tooltip" data-placement="top" title="Ansible入门">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -299,7 +323,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#一些有趣的linux网站"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4E00;&#x4E9B;&#x6709;&#x8DA3;&#x7684;Linux&#x7F51;&#x7AD9;</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#spring源码阅读笔记一"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Spring&#x6E90;&#x7801;&#x9605;&#x8BFB;&#x7B14;&#x8BB0;(&#x4E00;)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1-bean工程"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">1. Bean&#x5DE5;&#x7A0B;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#1-defaultlistenablebeanfactory"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">(1) DefaultListenableBeanFactory</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#2-xmlbeandefinitionreader"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">(2) XmlBeanDefinitionReader</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#3-xmlbeanfactory"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">(3) XmlBeanFactory</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#resource是如何封装的呢"><span class="toc-nav-number">1.1.3.1.</span> <span class="toc-nav-text"><code>Resource&#x662F;&#x5982;&#x4F55;&#x5C01;&#x88C5;&#x7684;&#x5462;&#xFF1F;</code></span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#获取xml的验证模式"><span class="toc-nav-number">1.1.3.2.</span> <span class="toc-nav-text">&#x83B7;&#x53D6;XML&#x7684;&#x9A8C;&#x8BC1;&#x6A21;&#x5F0F;</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#获取document"><span class="toc-nav-number">1.1.3.3.</span> <span class="toc-nav-text">&#x83B7;&#x53D6;Document</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#根据document注册bean信息"><span class="toc-nav-number">1.1.3.4.</span> <span class="toc-nav-text">&#x6839;&#x636E;Document&#x6CE8;&#x518C;Bean&#x4FE1;&#x606F;</span></a></li></ol></li></ol></li></ol></li></ol>
         
         </div>
       </aside>
@@ -319,7 +343,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#Linux" title="Linux">Linux</a>
+                          <a class="tag" href="/tags/#spring" title="spring">spring</a>
                         
                     </div>
                 </section>
