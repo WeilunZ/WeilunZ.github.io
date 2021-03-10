@@ -1,1 +1,423 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><title>loading</title><link rel=prefetch href=https://unpkg.com/jquery@3.3.1/dist/jquery.min.js as=script><script src=https://unpkg.com/jquery@3.3.1/dist/jquery.min.js></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css><script src=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js></script><link href=/css/articles.2c079b61.css rel=prefetch><link href=/css/articles~home~pages.1c122207.css rel=prefetch><link href=/css/gitalk.b6623aae.css rel=prefetch><link href=/css/gitment.7f9b3023.css rel=prefetch><link href=/css/pages.2c079b61.css rel=prefetch><link href=/css/tagcloud.4509716a.css rel=prefetch><link href=/js/archives.056611fe.js rel=prefetch><link href=/js/articles.b0172c4b.js rel=prefetch><link href=/js/articles~home~pages.93d92545.js rel=prefetch><link href=/js/comment.4e874b4c.js rel=prefetch><link href=/js/dplayer.059be256.js rel=prefetch><link href=/js/gitalk.09835498.js rel=prefetch><link href=/js/gitment.5a54c974.js rel=prefetch><link href=/js/home.2482dec2.js rel=prefetch><link href=/js/leancloud-storage.d4827b27.js rel=prefetch><link href=/js/pages.5822fb57.js rel=prefetch><link href=/js/related.c8de4528.js rel=prefetch><link href=/js/tagcloud.8278d636.js rel=prefetch><link href=/js/valine.bdadea88.js rel=prefetch><link href=/css/app.3a12edab.css rel=preload as=style><link href=/css/chunk-bootstrap-vue.1e1874e4.css rel=preload as=style><link href=/css/chunk-bootstrap.6c57f554.css rel=preload as=style><link href=/js/app.dd86e4d0.js rel=preload as=script><link href=/js/chunk-bootstrap-vue.c86bbd7c.js rel=preload as=script><link href=/js/chunk-bootstrap.3bd85c7e.js rel=preload as=script><link href=/js/chunk-font-awesome.8d2cd1c1.js rel=preload as=script><link href=/js/chunk-markdown-it.61e60a46.js rel=preload as=script><link href=/js/chunk-vue.3748bb0e.js rel=preload as=script><link href=/css/chunk-bootstrap-vue.1e1874e4.css rel=stylesheet><link href=/css/chunk-bootstrap.6c57f554.css rel=stylesheet><link href=/css/app.3a12edab.css rel=stylesheet><link rel=icon type=image/png sizes=32x32 href=/img/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/icons/favicon-16x16.png><link rel=manifest href=/manifest.json><meta name=theme-color content=#ffffff><meta name=apple-mobile-web-app-capable content=no><meta name=apple-mobile-web-app-status-bar-style content=default><meta name=apple-mobile-web-app-title content=hexo-theme-amber><link rel=apple-touch-icon href=/img/icons/apple-touch-icon-152x152.png><link rel=mask-icon href=/img/icons/safari-pinned-tab.svg color=#ffffff><meta name=msapplication-TileImage content=/img/icons/msapplication-icon-144x144.png><meta name=msapplication-TileColor content=#ffffff></head><body><noscript><link rel=stylesheet href=https://unpkg.com/bootstrap@4.1.3/dist/css/bootstrap.min.css><div class=container style="position: relative;"><div class=text-center style="position: relative; margin: 0 auto; top: 50vh; transform: translateY(-65%);"><h1 style="font-size: 12.5rem; font-weight:lighter;">JS</h1><h4 style="font-weight: normal; color: #6c757d;">We're sorry but this site requires <strong style="color: #007bff;">JavaScript</strong> to function normally.</h4></div></div></noscript><div id=app><script>document.write('<img src="\/img\/loading.gif" width="64" height="64" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">');</script></div><script src=/js/chunk-bootstrap-vue.c86bbd7c.js></script><script src=/js/chunk-markdown-it.61e60a46.js></script><script src=/js/chunk-font-awesome.8d2cd1c1.js></script><script src=/js/chunk-bootstrap.3bd85c7e.js></script><script src=/js/chunk-vue.3748bb0e.js></script><script src=/js/app.dd86e4d0.js></script></body></html>
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      记一次kafka故障 | WeilunZhou
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/css/plugins/gitment.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    <script src="/js/qrious.js"></script>
+  
+  
+    <script src="/js/gitment.js"></script>
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>WeilunZhou</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>记一次kafka故障</h2>
+  <p class="post-date">2019-10-15</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="故障描述">故障描述</h3>
+<blockquote>
+<p>Kafka节点9092端口健康监测突然red，并且反复重启无效。</p>
+</blockquote>
+<h3 id="问题分析">问题分析</h3>
+<blockquote>
+<p>该kafka集群，由若干个用户同时<code>直接</code>进行数据写入，导致client数目非常巨大，tcp connection数量一直维持high level (60k - 70k) ；</p>
+<p>大并发量下，open file（文件句柄）过多，导致节点刚起来的时候直接打爆ulimit默认限制。</p>
+</blockquote>
+<h3 id="解决方案">解决方案</h3>
+<h4 id="方案1iptables批量放开连接让连接慢慢分摊到别的节点上">方案1：iptables批量放开连接，让连接慢慢分摊到别的节点上</h4>
+<p>(1) 通过iptables和ipset限制端口访问量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/bin/bash</span></span><br><span class="line"></span><br><span class="line">yum -y install ipset</span><br><span class="line"></span><br><span class="line">ipset create nodes <span class="built_in">hash</span>:ip </span><br><span class="line"></span><br><span class="line">netstat -anp|grep xx.xx.xxx.xx:9092 |awk &#123;<span class="string">'print $5'</span>&#125;|head -10000|sort -n| uniq |cut -f4 -d<span class="string">":"</span> &gt; kafka-ip.txt</span><br><span class="line"></span><br><span class="line">cat kafka-ipv4.txt | <span class="keyword">while</span> <span class="built_in">read</span> line</span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line">	ipset add nodes <span class="variable">$line</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">iptables -I INPUT -m <span class="built_in">set</span> --match-set nodes src -p tcp --destination-port 9092 -j DROP</span><br><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
+<p>(2) supervisord启动kafka</p>
+<p><code>supervisorctl restart kafka</code></p>
+<p>(3) ipset remove ip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `seq 2 2000 10000`</span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line">	start=<span class="variable">$i</span></span><br><span class="line">	end=`expr <span class="variable">$i</span>+2000`</span><br><span class="line">  sed -n <span class="string">'/$start,$end/p'</span> kafka-ip.txt | <span class="keyword">while</span> <span class="built_in">read</span> line </span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    ipset del nodes <span class="variable">$line</span></span><br><span class="line">  <span class="keyword">done</span></span><br><span class="line">  sleep 2m</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">service iptables save</span><br><span class="line">service iptables restart</span><br></pre></td></tr></table></figure>
+<p>(3) 关闭防火墙</p>
+<p><code>service iptables stop</code><br>
+此时节点已恢复.</p>
+<h4 id="方案2修改ulimit限制">方案2：修改ulimit限制</h4>
+<p>第一种：临时修改正在运行的进程的限制</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># centos 6 版本的机器</span></span><br><span class="line">$ <span class="built_in">echo</span> -n <span class="string">'Max open files=1048576:1048576'</span> &gt; /proc/&lt;PID&gt;/limits</span><br><span class="line"></span><br><span class="line"><span class="comment"># centos 7 版本的机器</span></span><br><span class="line">$ prlimit --nofile=1048576:1048576 --pid 130328</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>缺陷是一旦进程再一次挂掉，重新起来的时候max open file依然是默认值。</p>
+</blockquote>
+<p>第二种：修改系统配置，重启supervisor和kafka后永久生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">修改 /etc/security/limits.conf</span><br><span class="line">增加 * - nofile 1048576(最大文件句柄数量) 这行</span><br><span class="line"></span><br><span class="line">修改 /etc/security/limits.d/90-nproc.conf 或者 /etc/security/limits.d/20-nproc.conf</span><br><span class="line">增加 * - nofile 1048576(最大文件句柄数量) 这行</span><br></pre></td></tr></table></figure>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#kafka" >
+    <span class="tag-code">kafka</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/article/Prometheus/">
+        <span class="nav-arrow">← </span>
+        
+          PromQL实现一些复杂函数功能
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/article/maven-multi-mirror-md/">
+        
+          maven多镜像源配置
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#故障描述"><span class="toc-nav-text">&#x6545;&#x969C;&#x63CF;&#x8FF0;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#问题分析"><span class="toc-nav-text">&#x95EE;&#x9898;&#x5206;&#x6790;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#解决方案"><span class="toc-nav-text">&#x89E3;&#x51B3;&#x65B9;&#x6848;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#方案1iptables批量放开连接让连接慢慢分摊到别的节点上"><span class="toc-nav-text">&#x65B9;&#x6848;1&#xFF1A;iptables&#x6279;&#x91CF;&#x653E;&#x5F00;&#x8FDE;&#x63A5;&#xFF0C;&#x8BA9;&#x8FDE;&#x63A5;&#x6162;&#x6162;&#x5206;&#x644A;&#x5230;&#x522B;&#x7684;&#x8282;&#x70B9;&#x4E0A;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#方案2修改ulimit限制"><span class="toc-nav-text">&#x65B9;&#x6848;2&#xFF1A;&#x4FEE;&#x6539;ulimit&#x9650;&#x5236;</span></a></li></ol></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://&lt;www class=&quot;WeilunZhou&quot;&gt;  &lt;/www&gt;.com/article/kafka-problem/';
+    var banner = 'undefined'
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "yanm1ng";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "记一次kafka故障",
+        owner: "yanm1ng",
+        repo: "yanm1ng.github.io",
+        oauth: {
+          client_id: "0f87e490e00ee3fd87ef",
+          client_secret: "4a9d2b148e7971c2201ad12131ce8bf8159ccd2e"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2021 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = 'null';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

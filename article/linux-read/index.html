@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="yanm1ng&#39;s blog">
+  <meta name="keyword" content="hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      Linux源码阅读(vfs) | WeilunZhou
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/css/plugins/gitment.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    <script src="/js/qrious.js"></script>
+  
+  
+    <script src="/js/gitment.js"></script>
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>WeilunZhou</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags/" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project/" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about/" class="item-link">About</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags/" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project/" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about/" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Linux源码阅读(vfs)</h2>
+  <p class="post-date">2020-07-11</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="11-vfs简介">1.1 VFS简介</h3>
+<p>Linux 可以支持多达数十种不同的文件系统。它们的实现各不相同，因此 Linux 内核向用户空间提供了虚拟文件系统这个统一的接口，来对文件系统进行操作。它提供了常见的文件系统对象模型，例如 inode、directory entry、mount 等，以及操作这些对象的方法，例如 inode operations、directory operations、file operations 等。</p>
+<img src="/Users/zhouweilun/Study/CS-Study/notes/blog/source/_posts/linux-read/fs_summary.png" alt="img" style="zoom:50%;">
+<h3 id="12-vfs原理">1.2 VFS原理</h3>
+<h4 id="121-dentry结构体">1.2.1 dentry结构体</h4>
+<p>dentry(目录项)：目录项是描述文件的逻辑属性，只存在于内存中，并没有实际对应的磁盘上的描述，更确切的说是存在于内存的目录项缓存，为了提高查找性能而设计。注意不管是文件夹还是最终的文件，都是属于目录项，所有的目录项在一起构成一颗庞大的目录树。例如：open一个文件/home/xxx/yyy.txt，那么/、home、xxx、yyy.txt都是一个目录项，VFS在查找的时候，根据一层一层的目录项找到对应的每个目录项的inode，那么沿着目录项进行操作就可以找到最终的文件。 注意：目录也是一种文件(所以也存在对应的inode)。打开目录，实际上就是打开目录文件。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">1</span> <span class="class"><span class="keyword">struct</span> <span class="title">dentry</span> &#123;</span></span><br><span class="line"> <span class="number">2</span>     <span class="comment">/* RCU lookup touched fields */</span></span><br><span class="line"> <span class="number">3</span>     <span class="keyword">unsigned</span> <span class="keyword">int</span> d_flags;        <span class="comment">/* protected by d_lock */</span></span><br><span class="line"> <span class="number">4</span>     <span class="keyword">seqcount_t</span> d_seq;        <span class="comment">/* per dentry seqlock */</span></span><br><span class="line"> <span class="number">5</span>     <span class="class"><span class="keyword">struct</span> <span class="title">hlist_bl_node</span> <span class="title">d_hash</span>;</span>    <span class="comment">/* lookup hash list */</span></span><br><span class="line"> <span class="number">6</span>     <span class="class"><span class="keyword">struct</span> <span class="title">dentry</span> *<span class="title">d_parent</span>;</span>    <span class="comment">/* parent directory */</span></span><br><span class="line"> <span class="number">7</span>     <span class="class"><span class="keyword">struct</span> <span class="title">qstr</span> <span class="title">d_name</span>;</span></span><br><span class="line"> <span class="number">8</span>     <span class="class"><span class="keyword">struct</span> <span class="title">inode</span> *<span class="title">d_inode</span>;</span>        <span class="comment">/* Where the name belongs to - NULL is</span></span><br><span class="line"><span class="comment"> 9                      * negative */</span></span><br><span class="line"><span class="number">10</span>     <span class="keyword">unsigned</span> <span class="keyword">char</span> d_iname[DNAME_INLINE_LEN];    <span class="comment">/* small names */</span></span><br><span class="line"><span class="number">11</span> </span><br><span class="line"><span class="number">12</span>     <span class="comment">/* Ref lookup also touches following */</span></span><br><span class="line"><span class="number">13</span>     <span class="keyword">unsigned</span> <span class="keyword">int</span> d_count;        <span class="comment">/* protected by d_lock */</span></span><br><span class="line"><span class="number">14</span>     <span class="keyword">spinlock_t</span> d_lock;        <span class="comment">/* per dentry lock */</span></span><br><span class="line"><span class="number">15</span>     <span class="keyword">const</span> <span class="class"><span class="keyword">struct</span> <span class="title">dentry_operations</span> *<span class="title">d_op</span>;</span></span><br><span class="line"><span class="number">16</span>     <span class="class"><span class="keyword">struct</span> <span class="title">super_block</span> *<span class="title">d_sb</span>;</span>    <span class="comment">/* The root of the dentry tree */</span></span><br><span class="line"><span class="number">17</span>     <span class="keyword">unsigned</span> <span class="keyword">long</span> d_time;        <span class="comment">/* used by d_revalidate */</span></span><br><span class="line"><span class="number">18</span>     <span class="keyword">void</span> *d_fsdata;            <span class="comment">/* fs-specific data */</span></span><br><span class="line"><span class="number">19</span> </span><br><span class="line"><span class="number">20</span>     <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">d_lru</span>;</span>        <span class="comment">/* LRU list */</span></span><br><span class="line"><span class="number">21</span>     <span class="comment">/*</span></span><br><span class="line"><span class="comment">22      * d_child and d_rcu can share memory</span></span><br><span class="line"><span class="comment">23      */</span></span><br><span class="line"><span class="number">24</span>     <span class="keyword">union</span> &#123;</span><br><span class="line"><span class="number">25</span>         <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">d_child</span>;</span>    <span class="comment">/* child of parent list */</span></span><br><span class="line"><span class="number">26</span>          <span class="class"><span class="keyword">struct</span> <span class="title">rcu_head</span> <span class="title">d_rcu</span>;</span></span><br><span class="line"><span class="number">27</span>     &#125; d_u;</span><br><span class="line"><span class="number">28</span>     <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">d_subdirs</span>;</span>    <span class="comment">/* our children */</span></span><br><span class="line"><span class="number">29</span>     <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> <span class="title">d_alias</span>;</span>    <span class="comment">/* inode alias list */</span></span><br><span class="line"><span class="number">30</span> &#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="122-打开文件">1.2.2 打开文件</h4>
+<p>首先，让我们分析open这个系统调用的背后，它最终调用了内核的系统调用实现sys_open，下面分析整个过程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">SYSCALL_DEFINE3(open, <span class="keyword">const</span> <span class="keyword">char</span> __user *, filename, <span class="keyword">int</span>, flags, <span class="keyword">umode_t</span>, mode)</span><br><span class="line">&#123;</span><br><span class="line">......</span><br><span class="line">  <span class="keyword">return</span> do_sys_open(AT_FDCWD, filename, flags, mode);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">do_sys_open</span><span class="params">(<span class="keyword">int</span> dfd, <span class="keyword">const</span> <span class="keyword">char</span> __user *filename, <span class="keyword">int</span> flags, <span class="keyword">umode_t</span> mode)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">......</span><br><span class="line">  fd = get_unused_fd_flags(flags);</span><br><span class="line">  <span class="keyword">if</span> (fd &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">file</span> *<span class="title">f</span> = <span class="title">do_filp_open</span>(<span class="title">dfd</span>, <span class="title">tmp</span>, &amp;<span class="title">op</span>);</span></span><br><span class="line">    <span class="keyword">if</span> (IS_ERR(f)) &#123;</span><br><span class="line">      put_unused_fd(fd);</span><br><span class="line">      fd = PTR_ERR(f);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      fsnotify_open(f);</span><br><span class="line">      fd_install(fd, f);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  putname(tmp);</span><br><span class="line">  <span class="keyword">return</span> fd;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要打开一个文件，首先要通过<code>get_unused_fd_flags</code>获取一个未被使用的文件描述符。</p>
+<h3 id="13-总结">1.3 总结</h3>
+<p><img src="/Users/zhouweilun/Study/CS-Study/notes/blog/source/_posts/linux-read/file_summary.png" alt="img"></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#Linux" >
+    <span class="tag-code">Linux</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/article/goroutine/">
+        <span class="nav-arrow">← </span>
+        
+          Go语言开发中如何控制Goroutine的数量
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/article/netty/">
+        
+          netty
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Gitment START -->
+      <div id="comments"></div>
+      <!-- Gitment END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#11-vfs简介"><span class="toc-nav-text">1.1 VFS&#x7B80;&#x4ECB;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#12-vfs原理"><span class="toc-nav-text">1.2 VFS&#x539F;&#x7406;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#121-dentry结构体"><span class="toc-nav-text">1.2.1 dentry&#x7ED3;&#x6784;&#x4F53;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#122-打开文件"><span class="toc-nav-text">1.2.2 &#x6253;&#x5F00;&#x6587;&#x4EF6;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#13-总结"><span class="toc-nav-text">1.3 &#x603B;&#x7ED3;</span></a></li></ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://&lt;www class=&quot;WeilunZhou&quot;&gt;  &lt;/www&gt;.com/article/linux-read/';
+    var banner = 'undefined'
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+  <script>
+    var gitmentConfig = "yanm1ng";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "Linux源码阅读(vfs)",
+        owner: "yanm1ng",
+        repo: "yanm1ng.github.io",
+        oauth: {
+          client_id: "0f87e490e00ee3fd87ef",
+          client_secret: "4a9d2b148e7971c2201ad12131ce8bf8159ccd2e"
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  </script>
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2021 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = 'null';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+<script src="/js/script.js"></script>
+  </body>
+</html>

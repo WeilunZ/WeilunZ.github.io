@@ -1,1 +1,656 @@
-<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><!--[if IE]><link rel="icon" href="/favicon.ico"><![endif]--><title>loading</title><link rel=prefetch href=https://unpkg.com/jquery@3.3.1/dist/jquery.min.js as=script><script src=https://unpkg.com/jquery@3.3.1/dist/jquery.min.js></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css><script src=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js></script><link href=/css/articles.2c079b61.css rel=prefetch><link href=/css/articles~home~pages.1c122207.css rel=prefetch><link href=/css/gitalk.b6623aae.css rel=prefetch><link href=/css/gitment.7f9b3023.css rel=prefetch><link href=/css/pages.2c079b61.css rel=prefetch><link href=/css/tagcloud.4509716a.css rel=prefetch><link href=/js/archives.056611fe.js rel=prefetch><link href=/js/articles.b0172c4b.js rel=prefetch><link href=/js/articles~home~pages.93d92545.js rel=prefetch><link href=/js/comment.4e874b4c.js rel=prefetch><link href=/js/dplayer.059be256.js rel=prefetch><link href=/js/gitalk.09835498.js rel=prefetch><link href=/js/gitment.5a54c974.js rel=prefetch><link href=/js/home.2482dec2.js rel=prefetch><link href=/js/leancloud-storage.d4827b27.js rel=prefetch><link href=/js/pages.5822fb57.js rel=prefetch><link href=/js/related.c8de4528.js rel=prefetch><link href=/js/tagcloud.8278d636.js rel=prefetch><link href=/js/valine.bdadea88.js rel=prefetch><link href=/css/app.3a12edab.css rel=preload as=style><link href=/css/chunk-bootstrap-vue.1e1874e4.css rel=preload as=style><link href=/css/chunk-bootstrap.6c57f554.css rel=preload as=style><link href=/js/app.dd86e4d0.js rel=preload as=script><link href=/js/chunk-bootstrap-vue.c86bbd7c.js rel=preload as=script><link href=/js/chunk-bootstrap.3bd85c7e.js rel=preload as=script><link href=/js/chunk-font-awesome.8d2cd1c1.js rel=preload as=script><link href=/js/chunk-markdown-it.61e60a46.js rel=preload as=script><link href=/js/chunk-vue.3748bb0e.js rel=preload as=script><link href=/css/chunk-bootstrap-vue.1e1874e4.css rel=stylesheet><link href=/css/chunk-bootstrap.6c57f554.css rel=stylesheet><link href=/css/app.3a12edab.css rel=stylesheet><link rel=icon type=image/png sizes=32x32 href=/img/icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/img/icons/favicon-16x16.png><link rel=manifest href=/manifest.json><meta name=theme-color content=#ffffff><meta name=apple-mobile-web-app-capable content=no><meta name=apple-mobile-web-app-status-bar-style content=default><meta name=apple-mobile-web-app-title content=hexo-theme-amber><link rel=apple-touch-icon href=/img/icons/apple-touch-icon-152x152.png><link rel=mask-icon href=/img/icons/safari-pinned-tab.svg color=#ffffff><meta name=msapplication-TileImage content=/img/icons/msapplication-icon-144x144.png><meta name=msapplication-TileColor content=#ffffff></head><body><noscript><link rel=stylesheet href=https://unpkg.com/bootstrap@4.1.3/dist/css/bootstrap.min.css><div class=container style="position: relative;"><div class=text-center style="position: relative; margin: 0 auto; top: 50vh; transform: translateY(-65%);"><h1 style="font-size: 12.5rem; font-weight:lighter;">JS</h1><h4 style="font-weight: normal; color: #6c757d;">We're sorry but this site requires <strong style="color: #007bff;">JavaScript</strong> to function normally.</h4></div></div></noscript><div id=app><script>document.write('<img src="\/img\/loading.gif" width="64" height="64" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">');</script></div><script src=/js/chunk-bootstrap-vue.c86bbd7c.js></script><script src=/js/chunk-markdown-it.61e60a46.js></script><script src=/js/chunk-font-awesome.8d2cd1c1.js></script><script src=/js/chunk-bootstrap.3bd85c7e.js></script><script src=/js/chunk-vue.3748bb0e.js></script><script src=/js/app.dd86e4d0.js></script></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>WeilunZhou</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="WeilunZhou" type="application/atom+xml">
+    
+</head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/archives" class="header__link">Archive</a>
+			
+				<a href="/tags" class="header__link">Tags</a>
+			
+				<a href="/atom.xml" class="header__link">RSS</a>
+			
+		</nav>
+		<h1 class="header__title"><a href="/">WeilunZhou</a></h1>
+		<h2 class="header__subtitle">个人博客</h2>
+	</header>
+
+	<main>
+		
+	<span class="different-posts different-posts_earlier">📖 <a href="/">earlier posts</a> 📖</span>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/victoriametrics/">victoriametrics</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2020-03-14</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/tsdb/">tsdb</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="victoriametrics为什么快">VictoriaMetrics为什么快？</h2>
+<ul>
+<li><a href="https://medium.com/faun/victoriametrics-creating-the-best-remote-storage-for-prometheus-5d92d66787ac" target="_blank" rel="noopener">VictoriaMetrics — creating the best remote storage for Prometheus</a></li>
+</ul>
+<h3 id="1更好的压缩">1.更好的压缩</h3>
+<p>在TSDB的世界中，Gorilla压缩算法是一个业界标准，Prometheus、Influxdb、M3等都使用Gorilla。</p>
+<p>VictoriaMetrics在Gorilla的基础上进行了优化，Gorilla在典型的浮点数的异或运算后得到的结果其实并不如人意（前后仅有少量的0），因此压缩率没有那么高。VictoriaMetrics的作者将浮点数* 10^N，得到一个整数，整数之间异或后压缩率要比浮点数高很多。针对浮点数乘以10^N后可能超过64位的问题，再对整数/10^M保证所有time series的value能被转换为64位整数。</p>
+<p>将Counters使用delta-encoding转换为Gauges（同一个time series不同timestamp的value用增量代替原始值）减少存储空间。</p>
+<p>在上层使用一般性的压缩，比如zstd（一种快速的无损压缩算法），用于压缩重复模式和低熵的数据。</p>
+<h3 id="2data-structure">2.data structure</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-rw-r--r-- 1 root root   645052699 Apr 20 10:46 index.bin</span><br><span class="line">-rw-r--r-- 1 root root      784063 Apr 20 10:46 metaindex.bin</span><br><span class="line">-rw-r--r-- 1 root root  9521858864 Apr 20 10:46 timestamps.bin</span><br><span class="line">-rw-r--r-- 1 root root 20168371013 Apr 20 10:46 values.bin</span><br></pre></td></tr></table></figure>
+<h3 id="3cache-structure">3.cache structure</h3>
+<ul>
+<li>/var/data/victoriametrics/vmstorage/cache</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-rw-r--r-- 1 root root 289722144 Jan 14 13:57 curr_hour_metric_ids</span><br><span class="line">drwx------ 2 root root      4096 Jan 14 13:57 date_metricID</span><br><span class="line">drwx------ 2 root root      4096 Jan 14 13:57 metricID_metricName</span><br><span class="line">drwx------ 2 root root      4096 Jan 14 13:57 metricID_tsid</span><br><span class="line">drwx------ 2 root root      4096 Jan 14 13:57 metricName_tsid</span><br><span class="line">-rw-r--r-- 1 root root 296396616 Jan 14 13:57 prev_hour_metric_ids</span><br></pre></td></tr></table></figure>
+<ul>
+<li>/var/data/victoriametrics/vmstorage/cache/metricID_tsid</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">-rw-r--r-- 1 root root 120183 Jan 14 13:57 data.6.bin</span><br><span class="line">-rw-r--r-- 1 root root 111710 Jan 14 13:57 data.7.bin</span><br><span class="line">-rw-r--r-- 1 root root  69297 Jan 14 13:57 data.8.bin</span><br><span class="line">-rw-r--r-- 1 root root 270344 Jan 14 13:57 data.9.bin</span><br><span class="line">-rw-r--r-- 1 root root      8 Jan 14 13:57 metadata.bin</span><br></pre></td></tr></table></figure>
+<p><strong>vm fastcache为什么快？</strong></p>
+<ol>
+<li>cache分为多个bucket，每个bucket有一把锁，多核cpu下可以提升并发读写能力;</li>
+<li>每个bucket包含了若干个chunk(<code>chucks [][]byte</code>)，每个chuck 64KB，减少内存碎片，在GB级别的cache大小下可以节省若干个GB的内存;</li>
+<li>chucks尽可能堆外分配，因为GoGC在无需做调整的情况下，可以更频繁地回收不使用的内存。</li>
+</ol>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/mysql-install/">Centos7.3安装Mysql8</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2020-03-07</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/Mysql/">Mysql</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="centos7安装mysql8">Centos7安装Mysql8</h2>
+<h3 id="1安装">1.安装</h3>
+<ul>
+<li>
+<p>系统版本：Centos7</p>
+</li>
+<li>
+<p>Mysql版本：Mysql8.0</p>
+</li>
+<li>
+<p>安装方式：yum</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">wget https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm </span><br><span class="line"></span><br><span class="line">sudo rpm -Uvh mysql80-community-release-el7-3.noarch.rpm</span><br><span class="line"></span><br><span class="line">sudo yum install mysql-community-server</span><br><span class="line"></span><br><span class="line">sudo systemctl start mysqld.service</span><br><span class="line"></span><br><span class="line">sudo systemctl status mysqld.service</span><br></pre></td></tr></table></figure>
+<h4 id="切换版本">切换版本</h4>
+<p>如果想要更换版本，可以先查看当前mysql yum repository中所有mysql版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum repolist all | grep mysql</span><br></pre></td></tr></table></figure>
+<p>切换版本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum-config-manager --<span class="built_in">disable</span> mysql80-community</span><br><span class="line">sudo yum-config-manager --<span class="built_in">enable</span> mysql57-community</span><br></pre></td></tr></table></figure>
+<h3 id="2修改密码">2.修改密码</h3>
+<ol>
+<li>Mysql第一次启动后会创建超级管理员账号<code>root@localhost</code>，初始密码存储在日志文件中：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo grep `temporary password` /var/<span class="built_in">log</span>/mysqld.log</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修改默认密码</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysql -u root -p</span><br><span class="line"><span class="comment"># &gt; password: &lt;输入你的初始密码&gt;</span></span><br><span class="line">alter user <span class="string">'root'</span>@<span class="string">'localhost'</span> identified by <span class="string">'&lt;new password&gt;'</span></span><br><span class="line"><span class="comment"># 注意这里的新密码需要符合策略，包含数字、大小写字母、特殊字符。</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>修改默认策略</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; <span class="built_in">set</span> global validate_password_policy=0;</span><br></pre></td></tr></table></figure>
+<p>此时可能报错提示</p>
+<p><code>ERROR 1193 (HY000): Unknown system variable 'validate_password_policy'</code></p>
+<p>原因是<code>validate_password_policy</code>默认没有被激活，解决如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; select plugin_name, plugin_status from information_schema.plugins <span class="built_in">where</span> plugin_name like <span class="string">'validate%'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; install plugin validate_password soname <span class="string">'validate_password.so'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; mysql&gt; select plugin_name, plugin_status from information_schema.plugins <span class="built_in">where</span> plugin_name like <span class="string">'validate%'</span>;</span><br><span class="line"></span><br><span class="line">SHOW VARIABLES LIKE <span class="string">'validate_password%'</span>;</span><br></pre></td></tr></table></figure>
+<p>首先查找plugin中是否包含validatexxx，返回empty set说明不包含，安装后即可，接着重新运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; <span class="built_in">set</span> global validate_password_policy=0;</span><br><span class="line"></span><br><span class="line">mysql &gt; <span class="built_in">set</span> global validate_password_length=8;</span><br><span class="line"></span><br><span class="line">mysql &gt; alter user <span class="string">'root'</span>@<span class="string">'localhost'</span> identified by <span class="string">'12345678'</span>;</span><br></pre></td></tr></table></figure>
+<p>修改成功</p>
+<h3 id="3允许用户远程访问">3.允许用户远程访问</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql &gt; CREATE USER <span class="string">'test_user'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'12345678'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; GRANT ALL ON *.* TO <span class="string">'test_user'</span>@<span class="string">'%'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; ALTER USER <span class="string">'test_user'</span>@<span class="string">'%'</span> IDENTIFIED WITH mysql_native_password BY <span class="string">'12345678'</span>;</span><br><span class="line"></span><br><span class="line">mysql &gt; FLUSH PRIVILEGES;</span><br></pre></td></tr></table></figure>
+<p>完事后IDE下测试数据库连接成功！</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/stdout&amp;stderr/">/dev/stdout和/dev/stderr是什么？</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2020-03-07</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/Linux/">Linux</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="linux中的devstdout和devstderr">Linux中的/dev/stdout和/dev/stderr</h2>
+<p>In the <code>/dev</code> directory, amongst the disks, TTYs, <code>urandom</code>s, and other pseudo-devices, are the files <code>/dev/stdin</code>, <code>/dev/stdout</code> and <code>/dev/stderr</code>. What are they, and what are they good for?</p>
+<p>You may have heard of standard in, standard out and standard error, the three “standard streams” which each UNIX process usually has attached to it on start. For example, <code>cat</code> run with no arguments reads from standard in and writes to standard out (achieving nothing):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo hello | cat | tr &apos;[a-z]&apos; &apos;[A-Z]&apos;</span><br><span class="line">HELLO</span><br></pre></td></tr></table></figure>
+<p>The standard streams don’t seem like “devices”, but there they are in <code>/dev</code>; files which any process can open, read from, and write to, just like other files. When I write to <code>/dev/stdout</code> from my shell, it’s printed to my terminal:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo hello &gt; /dev/stdout</span><br><span class="line">hello</span><br></pre></td></tr></table></figure>
+<p>Crucially, <code>/dev/stdout</code> means different things to different processes. Above, <code>/dev/stdout</code> refers to the standard out of my shell process, which is my terminal, and that’s why <code>hello</code> printed to my screen. But if I tell <code>cp</code> to write to <code>/dev/stdout</code>, it writes to its own standard out stream, not to my shell’s standard out:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ echo hello | cp /dev/stdin /dev/stdout | tr &apos;[a-z]&apos; &apos;[A-Z]&apos;</span><br><span class="line">HELLO</span><br></pre></td></tr></table></figure>
+<p>Look at that: we got <code>cp</code>, normally used for copying files, to behave just like <code>cat</code>, which copies streams! We were able to do this by telling <code>cp</code> to use its standard streams instead of files.</p>
+<p>When building shell pipelines, this can be very useful. The following pipeline grabs a JPEG from the web, converts it to a monochrome PNG, then posts the result to another web server, without creating any temporary files:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl https://upload.wikimedia.org/wikipedia/en/5/52/Testcard_F.jpg \</span><br><span class="line">| convert -monochrome /dev/stdin png:/dev/stdout \</span><br><span class="line">| curl -X POST --data @/dev/stdin -H &apos;Content-Type: image/png&apos; http://requestbin.fullcontact.com/13rcezq1</span><br></pre></td></tr></table></figure>
+<p>Processes interact with files via file descriptors. When a process opens a file, the OS gives the process a file descriptor (a number) which the process can use to read or write from the open file. We can see this with <code>strace</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ cat foo.txt</span><br><span class="line">hello</span><br><span class="line">$ strace cat foo.txt</span><br><span class="line">...</span><br><span class="line">open(&quot;foo.txt&quot;, O_RDONLY)               = 3</span><br><span class="line">...</span><br><span class="line">read(3, &quot;hello\n&quot;, 65536)               = 6</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>Here, <code>cat foo.txt</code> called <code>open(&quot;foo.txt&quot;, O_RDONLY)</code>, and the OS returned the file descriptor <code>3</code>. <code>cat</code> then read from this with <code>read(3, ...)</code>.</p>
+<p>The standard streams in, out and error are at file descriptors 0, 1 and 2 respectively. The standard streams are pre-attached; the process does not have to open them. For example, <code>cat</code> run with no arguments reads from file descriptor <code>0</code> and writes to file descriptor <code>1</code>. In a shell pipeline, these standard file descriptors are references to anonymous pipes.</p>
+<p>When we run <code>cp /dev/stdin /dev/stdout</code>, the process opens the files <code>/dev/stdin</code> and <code>/dev/stdout</code> as normal, and gets back file descriptors for them. Which numbers do you think it gets back?</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">open(&quot;/dev/stdin&quot;, O_RDONLY)            = 3</span><br><span class="line">open(&quot;/dev/stdout&quot;, O_WRONLY|O_TRUNC)   = 4</span><br></pre></td></tr></table></figure>
+<p>No, it doesn’t get back 0 and 1; it gets two <em>new</em> file descriptors 3 and 4. But those new file descriptors both refer to the same underlying anonymous pipe.</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/maven-multi-mirror-md/">maven多镜像源配置</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2020-02-20</span><br />
+		
+		
+	</div>
+
+	
+
+	
+		<h3 id="场景">场景：</h3>
+<ul>
+<li>大部分jar包可以在公司的maven mirror找到，但小部分jar包下不到</li>
+<li>需要一个主备关系的mirror，当部分jar在主镜像中找不到时，自动去副镜像找</li>
+</ul>
+<h3 id="方法">方法：</h3>
+<blockquote>
+<p>参考：<a href="http://maven.apache.org/guides/mini/guide-mirror-settings.html" target="_blank" rel="noopener">http://maven.apache.org/guides/mini/guide-mirror-settings.html</a></p>
+</blockquote>
+<p>1.找到settings.xml并打开</p>
+<blockquote>
+<p>macos : open  ~/.m2/settings.xml</p>
+</blockquote>
+<p>2.修改mirrors</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mirrors</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus-aliyun<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">name</span>&gt;</span>nexus-aliyun<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>central<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">mirror</span>&gt;</span></span><br><span class="line">		  <span class="tag">&lt;<span class="name">id</span>&gt;</span>nexus-corp<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">		  <span class="tag">&lt;<span class="name">mirrorOf</span>&gt;</span>*<span class="tag">&lt;/<span class="name">mirrorOf</span>&gt;</span></span><br><span class="line">		  <span class="tag">&lt;<span class="name">name</span>&gt;</span>public<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		  <span class="tag">&lt;<span class="name">url</span>&gt;</span>公司的maven镜像地址<span class="tag">&lt;/<span class="name">url</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">mirror</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">mirrors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>注意</code>:</p>
+<ul>
+<li><code>mirrorOf</code>不能有多个mirror有相同的值，否则只会使用第一个mirror</li>
+</ul>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/kafka-problem/">记一次kafka故障</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-10-15</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/kafka/">kafka</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h3 id="故障描述">故障描述</h3>
+<blockquote>
+<p>Kafka节点9092端口健康监测突然red，并且反复重启无效。</p>
+</blockquote>
+<h3 id="问题分析">问题分析</h3>
+<blockquote>
+<p>该kafka集群，由若干个用户同时<code>直接</code>进行数据写入，导致client数目非常巨大，tcp connection数量一直维持high level (60k - 70k) ；</p>
+<p>大并发量下，open file（文件句柄）过多，导致节点刚起来的时候直接打爆ulimit默认限制。</p>
+</blockquote>
+<h3 id="解决方案">解决方案</h3>
+<h4 id="方案1iptables批量放开连接让连接慢慢分摊到别的节点上">方案1：iptables批量放开连接，让连接慢慢分摊到别的节点上</h4>
+<p>(1) 通过iptables和ipset限制端口访问量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/bin/bash</span></span><br><span class="line"></span><br><span class="line">yum -y install ipset</span><br><span class="line"></span><br><span class="line">ipset create nodes <span class="built_in">hash</span>:ip </span><br><span class="line"></span><br><span class="line">netstat -anp|grep xx.xx.xxx.xx:9092 |awk &#123;<span class="string">'print $5'</span>&#125;|head -10000|sort -n| uniq |cut -f4 -d<span class="string">":"</span> &gt; kafka-ip.txt</span><br><span class="line"></span><br><span class="line">cat kafka-ipv4.txt | <span class="keyword">while</span> <span class="built_in">read</span> line</span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line">	ipset add nodes <span class="variable">$line</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line">iptables -I INPUT -m <span class="built_in">set</span> --match-set nodes src -p tcp --destination-port 9092 -j DROP</span><br><span class="line">service iptables save</span><br></pre></td></tr></table></figure>
+<p>(2) supervisord启动kafka</p>
+<p><code>supervisorctl restart kafka</code></p>
+<p>(3) ipset remove ip</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> `seq 2 2000 10000`</span><br><span class="line"><span class="keyword">do</span> </span><br><span class="line">	start=<span class="variable">$i</span></span><br><span class="line">	end=`expr <span class="variable">$i</span>+2000`</span><br><span class="line">  sed -n <span class="string">'/$start,$end/p'</span> kafka-ip.txt | <span class="keyword">while</span> <span class="built_in">read</span> line </span><br><span class="line">  <span class="keyword">do</span></span><br><span class="line">    ipset del nodes <span class="variable">$line</span></span><br><span class="line">  <span class="keyword">done</span></span><br><span class="line">  sleep 2m</span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">service iptables save</span><br><span class="line">service iptables restart</span><br></pre></td></tr></table></figure>
+<p>(3) 关闭防火墙</p>
+<p><code>service iptables stop</code><br>
+此时节点已恢复.</p>
+<h4 id="方案2修改ulimit限制">方案2：修改ulimit限制</h4>
+<p>第一种：临时修改正在运行的进程的限制</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># centos 6 版本的机器</span></span><br><span class="line">$ <span class="built_in">echo</span> -n <span class="string">'Max open files=1048576:1048576'</span> &gt; /proc/&lt;PID&gt;/limits</span><br><span class="line"></span><br><span class="line"><span class="comment"># centos 7 版本的机器</span></span><br><span class="line">$ prlimit --nofile=1048576:1048576 --pid 130328</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>缺陷是一旦进程再一次挂掉，重新起来的时候max open file依然是默认值。</p>
+</blockquote>
+<p>第二种：修改系统配置，重启supervisor和kafka后永久生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">修改 /etc/security/limits.conf</span><br><span class="line">增加 * - nofile 1048576(最大文件句柄数量) 这行</span><br><span class="line"></span><br><span class="line">修改 /etc/security/limits.d/90-nproc.conf 或者 /etc/security/limits.d/20-nproc.conf</span><br><span class="line">增加 * - nofile 1048576(最大文件句柄数量) 这行</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/Prometheus/">PromQL实现一些复杂函数功能</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-10-10</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/Prometheus/">Prometheus</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="graphite-functions-in-promql">graphite functions in PromQL</h2>
+<p><code>highestMax</code>, <code>mostDeviant</code>这种需要多步骤过滤的方法在<code>PromQL</code>中的一个基本思路是</p>
+<blockquote>
+<ol>
+<li>展示需要的数据</li>
+<li>and on ( tag )</li>
+<li>过滤条件</li>
+</ol>
+</blockquote>
+<blockquote>
+<p><code>vector1 and vector2</code> results in a vector consisting of the elements of <code>vector1</code> for which there are elements in <code>vector2</code> with exactly matching label sets. Other elements are dropped. The metric name and values are carried over from the <code>left-hand side vector</code>.<br>
+一句话:  <code>and</code> 左手边的决定指标名称和值, 右手边的决定过滤条件.</p>
+</blockquote>
+<h3 id="highestmax-promql-example"><code>highestMax</code> PromQL example</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># show max value grouped by `endpoint`(ignore `device` tag)</span><br><span class="line">max(</span><br><span class="line">    clamp_max(sys.io.util_value&#123;env=&apos;elasticsearch&apos;, appid =&apos;100012314&apos;&#125;, 100 )</span><br><span class="line">) by (appid, pool, endpoint)</span><br><span class="line"></span><br><span class="line"># join on `endpoint`</span><br><span class="line">and on ( endpoint )</span><br><span class="line"></span><br><span class="line"># filtering</span><br><span class="line">limitk(10, </span><br><span class="line">  sort_desc(</span><br><span class="line">    range_max(</span><br><span class="line">    	  clamp_max(sys.io.util_value&#123;env=&apos;elasticsearch&apos;, appid =&apos;100012314&apos;&#125;, 100)</span><br><span class="line">    )</span><br><span class="line">  )</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="mostdeviant-promql-example"><code>mostDeviant</code> PromQL example</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">WITH(</span><br><span class="line">  mostDeviant(k,selector)=selector and on (ip)</span><br><span class="line">  limitk(k,sort_desc(</span><br><span class="line">    running_avg(sum2_over_time(selector-range_avg(selector)))</span><br><span class="line">  ))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">mostDeviant($metric_number,app.appid.ip.error.count_value&#123;appid=&apos;$appid&apos;&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="highestaverage-promql-example"><code>highestAverage</code> PromQL example</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">WITH(</span><br><span class="line">  mostDeviant(k,selector)=selector and on (endpoint)</span><br><span class="line">  limitk(k,sort_desc(</span><br><span class="line">    range_avg(selector)</span><br><span class="line">  ))</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">mostDeviant(20,k8s.node.network.packet_kernel_drop_value&#123;endpoint=&apos;$host&apos;&#125;)</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/systemd/">Systemd使用技巧</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-10-09</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/Linux/">Linux</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h1 id="systemd">systemd</h1>
+<p>systemd的一些简单使用技巧</p>
+<h2 id="基本命令">基本命令</h2>
+<p><code>systemctl</code> 命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">systemctl status &lt;service_name&gt;         # 检查服务的状态</span><br><span class="line">systemctl start &lt;service_name&gt;          # 启动服务</span><br><span class="line">systemctl stop &lt;service_name&gt;           # 停止服务</span><br><span class="line">systemctl enable &lt;service_name&gt;         # enable服务, 简单讲, 让服务开机就跑起来, 具体策略按服务的配置来.</span><br><span class="line">systemctl disable &lt;service_name&gt;        # disable服务, 简单讲就是服务不再自动按照规定策略来跑了, 但不会停止现在已经跑起来的服务.</span><br><span class="line">systemctl --daemon-reload               # 重新加载systemd的服务列表, 安装和修改`xxx.service`需要用</span><br></pre></td></tr></table></figure>
+<p><code>journalctl</code>命令: (#TODO)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">journalctl                              #可以用来看日志 (TODO)</span><br></pre></td></tr></table></figure>
+<h2 id="service-template">service template</h2>
+<p>下边是一个通过systemd来把一些linux下的long running的进程快速配置成服务变通的办法.</p>
+<ol>
+<li>先准备一个bash脚本, 用来long running的方式启动应用.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># start.sh example.</span></span><br><span class="line"><span class="comment"># <span class="doctag">NOTE:</span> use absolute path</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#!/usr/bin/sh</span></span><br><span class="line">PROOT=<span class="string">"<span class="variable">$( cd "$(dirname "$0")</span>"</span> ; <span class="built_in">pwd</span> -P )<span class="string">"</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"><span class="variable">$PROOT</span>/bin/prometheus \</span></span><br><span class="line"><span class="string">        --storage.tsdb.path="</span>/var/data/prometheus/<span class="string">" \</span></span><br><span class="line"><span class="string">        --config.file="</span><span class="variable">$PROOT</span>/conf/prometheus.yml<span class="string">"</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>然后把下边的模板改改, 保存成 <code>xxxx.service</code> 放到 <code>/etc/systemd/system/</code> 下.  这个放的位置比较较粗糙.</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description=prometheus</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=/bin/sh -c &apos;/home/oliveagle/app/prometheus/start.sh 2&gt;&amp;1&apos;</span><br><span class="line">User=oliveagle</span><br><span class="line">Group=oliveagle</span><br><span class="line">Restart=always</span><br><span class="line">RestartSec=10</span><br><span class="line"># restart service every xxx seconds.</span><br><span class="line"># RuntimeMaxSec=604800</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line"># NOTE: use default.target</span><br><span class="line">WantedBy=default.target</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>通过<code>systemctl</code>命令加载, 安装, 启动</li>
+</ol>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/Linux-websites/">一些有趣的Linux网站</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-10-07</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/Linux/">Linux</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="一些有趣的linux网站">一些有趣的Linux网站</h2>
+<ul>
+<li><a href="https://github.com/aleksandar-todorovic/awesome-linux" target="_blank" rel="noopener">awesome-linux列表</a> - github 上 awesome-linux 列表，里边各种linux相关的网站</li>
+<li><a href="https://github.com/geekwolf/free-books/blob/master/free-programming-books.md" target="_blank" rel="noopener">free-programming-books</a> - 很多开发相关的免费书籍</li>
+<li><a href="https://bootlin.com/docs/" target="_blank" rel="noopener">bootlin.com</a> - linux 内核相关
+<ul>
+<li><a href="https://elixir.bootlin.com/linux/v5.4/source" target="_blank" rel="noopener">elixir.bootlin.com</a> - linux kernal 源码浏览</li>
+</ul>
+</li>
+<li><a href="https://distrowatch.com/" target="_blank" rel="noopener">distrowatch.com</a> - linux 各发行版的信息</li>
+<li><a href="https://www.commandlinefu.com/commands/browse" target="_blank" rel="noopener">commandlinefu.com</a> - linux 命令收集网站</li>
+<li><a href="https://explainshell.com/#" target="_blank" rel="noopener">explainshell.com</a> - 解释shell命令的网站</li>
+<li><a href="https://www.shortcutfoo.com/" target="_blank" rel="noopener">shortcutfoo.com</a> - 练习shortcut的网站</li>
+<li><a href="http://vim-adventures.com/" target="_blank" rel="noopener">vim-adventures.com</a> - 通过RPG游戏来联系VIM的使用</li>
+<li><a href="http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html" target="_blank" rel="noopener">Bash Guide for Beginners</a> - Bash Guide for Beginners</li>
+<li><a href="https://coolshell.cn/" target="_blank" rel="noopener">coolshell网站</a> - 酷壳</li>
+<li><a href="https://github.com/peco/peco" target="_blank" rel="noopener">https://github.com/peco/peco</a> - 非常简单好用的交互式过滤工具</li>
+<li><a href="https://www.openvim.com/" target="_blank" rel="noopener">https://www.openvim.com/</a> - Interactive vim tutorial</li>
+</ul>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/Docker_commands/">Docker命令快速入门</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-10-05</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/Docker/">Docker</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="docker环境安装">Docker环境安装</h2>
+<ul>
+<li>centos安装docker</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install docker</span><br></pre></td></tr></table></figure>
+<ul>
+<li>启动Docker</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+<h2 id="docker镜像常用命令">Docker镜像常用命令</h2>
+<h4 id="下载镜像">下载镜像</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull alpine:3.8</span><br></pre></td></tr></table></figure>
+<h4 id="列出镜像">列出镜像</h4>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<h4 id="删除镜像">删除镜像</h4>
+<ul>
+<li>指定名称删除镜像</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi alpine:3.8</span><br></pre></td></tr></table></figure>
+<ul>
+<li>指定名称删除镜像（强制）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rmi -f alpine:3.8</span><br></pre></td></tr></table></figure>
+<h2 id="docker容器常用命令">Docker容器常用命令</h2>
+<h4 id="新建并启动容器以下命令启动一个bash终端允许用户进行交互">新建并启动容器（以下命令启动一个bash终端，允许用户进行交互）</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -v（主机要共享的目录）:（容器上同步的目录）--name （指定数据卷容器的名称）-i -t xxxx:xxxx  /bin/bash</span><br></pre></td></tr></table></figure>
+<p>其中,<code>-i</code>让容器的标准输入保持打开，<code>-t</code>让Docker分配一个伪终端并绑定到容器的标准输入上，<code>--name</code>为容器指定一个名称。</p>
+<h4 id="启动容器2">启动容器2</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 80:80 --name [指定容器名称] -d [镜像]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>-d选项：表示后台运行</li>
+<li>-p选项：指定端口映射，本机80端口映射到容器80端口</li>
+</ul>
+<h4 id="列出容器">列出容器</h4>
+<ul>
+<li>列出运行中的容器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+<ul>
+<li>列出所有容器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+<h4 id="停止容器">停止容器</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># $ContainerName及$ContainerId可以用docker ps命令查询出来</span><br><span class="line">docker stop $ContainerName(或者$ContainerId)</span><br></pre></td></tr></table></figure>
+<h4 id="强制停止容器">强制停止容器</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker kill $ContainerName(或者$ContainerId)</span><br></pre></td></tr></table></figure>
+<h4 id="启动已停止的容器">启动已停止的容器</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start $ContainerName(或者$ContainerId)</span><br></pre></td></tr></table></figure>
+<h4 id="进入容器内部的bash">进入容器内部的bash</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it $ContainerName /bin/bash</span><br></pre></td></tr></table></figure>
+<h4 id="删除容器">删除容器</h4>
+<ul>
+<li>删除指定容器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm $ContainerName(或者$ContainerId)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>强制删除所有容器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker rm -f $(docker ps -a -q)</span><br></pre></td></tr></table></figure>
+<h4 id="查看容器的日志">查看容器的日志</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs $ContainerName(或者$ContainerId)</span><br></pre></td></tr></table></figure>
+<h4 id="查看容器的ip地址">查看容器的ip地址</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect --format &apos;&#123;&#123; .NetworkSettings.IPAddress &#125;&#125;&apos; $ContainerName(或者$ContainerId)</span><br></pre></td></tr></table></figure>
+<h4 id="同步宿主机时间到容器">同步宿主机时间到容器</h4>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker cp /etc/localtime $ContainerName(或者$ContainerId):/etc/</span><br></pre></td></tr></table></figure>
+<h4 id="在宿主机查看docker使用cpu-内存-网络-io情况">在宿主机查看docker使用cpu、内存、网络、io情况</h4>
+<ul>
+<li>查看指定容器情况：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stats $ContainerName(或者$ContainerId)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查看所有容器情况：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stats -a</span><br></pre></td></tr></table></figure>
+<h3 id="docker-run">docker run</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line">Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br><span class="line"></span><br><span class="line">Run a command in a new container</span><br><span class="line">[root@SVR29295HW1288 admin]# docker run --help</span><br><span class="line"></span><br><span class="line">Usage:	docker run [OPTIONS] IMAGE [COMMAND] [ARG...]</span><br><span class="line"></span><br><span class="line">Run a command in a new container</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">      --add-host list                  Add a custom host-to-IP mapping (host:ip)</span><br><span class="line">  -a, --attach list                    Attach to STDIN, STDOUT or STDERR</span><br><span class="line">      --blkio-weight uint16            Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)</span><br><span class="line">      --blkio-weight-device list       Block IO weight (relative device weight) (default [])</span><br><span class="line">      --cap-add list                   Add Linux capabilities</span><br><span class="line">      --cap-drop list                  Drop Linux capabilities</span><br><span class="line">      --cgroup-parent string           Optional parent cgroup for the container</span><br><span class="line">      --cidfile string                 Write the container ID to the file</span><br><span class="line">      --cpu-period int                 Limit CPU CFS (Completely Fair Scheduler) period</span><br><span class="line">      --cpu-quota int                  Limit CPU CFS (Completely Fair Scheduler) quota</span><br><span class="line">      --cpu-rt-period int              Limit CPU real-time period in microseconds</span><br><span class="line">      --cpu-rt-runtime int             Limit CPU real-time runtime in microseconds</span><br><span class="line">  -c, --cpu-shares int                 CPU shares (relative weight)</span><br><span class="line">      --cpus decimal                   Number of CPUs</span><br><span class="line">      --cpuset-cpus string             CPUs in which to allow execution (0-3, 0,1)</span><br><span class="line">      --cpuset-mems string             MEMs in which to allow execution (0-3, 0,1)</span><br><span class="line">  -d, --detach                         Run container in background and print container ID</span><br><span class="line">      --detach-keys string             Override the key sequence for detaching a container</span><br><span class="line">      --device list                    Add a host device to the container</span><br><span class="line">      --device-cgroup-rule list        Add a rule to the cgroup allowed devices list</span><br><span class="line">      --device-read-bps list           Limit read rate (bytes per second) from a device (default [])</span><br><span class="line">      --device-read-iops list          Limit read rate (IO per second) from a device (default [])</span><br><span class="line">      --device-write-bps list          Limit write rate (bytes per second) to a device (default [])</span><br><span class="line">      --device-write-iops list         Limit write rate (IO per second) to a device (default [])</span><br><span class="line">      --disable-content-trust          Skip image verification (default true)</span><br><span class="line">      --dns list                       Set custom DNS servers</span><br><span class="line">      --dns-option list                Set DNS options</span><br><span class="line">      --dns-search list                Set custom DNS search domains</span><br><span class="line">      --entrypoint string              Overwrite the default ENTRYPOINT of the image</span><br><span class="line">  -e, --env list                       Set environment variables</span><br><span class="line">      --env-file list                  Read in a file of environment variables</span><br><span class="line">      --expose list                    Expose a port or a range of ports</span><br><span class="line">      --group-add list                 Add additional groups to join</span><br><span class="line">      --health-cmd string              Command to run to check health</span><br><span class="line">      --health-interval duration       Time between running the check (ms|s|m|h) (default 0s)</span><br><span class="line">      --health-retries int             Consecutive failures needed to report unhealthy</span><br><span class="line">      --health-start-period duration   Start period for the container to initialize before starting</span><br><span class="line">                                       health-retries countdown (ms|s|m|h) (default 0s)</span><br><span class="line">      --health-timeout duration        Maximum time to allow one check to run (ms|s|m|h) (default 0s)</span><br><span class="line">      --help                           Print usage</span><br><span class="line">  -h, --hostname string                Container host name</span><br><span class="line">      --init                           Run an init inside the container that forwards signals and reaps processes</span><br><span class="line">  -i, --interactive                    Keep STDIN open even if not attached</span><br><span class="line">      --ip string                      IPv4 address (e.g., 172.30.100.104)</span><br><span class="line">      --ip6 string                     IPv6 address (e.g., 2001:db8::33)</span><br><span class="line">      --ipc string                     IPC mode to use</span><br><span class="line">      --isolation string               Container isolation technology</span><br><span class="line">      --kernel-memory bytes            Kernel memory limit</span><br><span class="line">  -l, --label list                     Set meta data on a container</span><br><span class="line">      --label-file list                Read in a line delimited file of labels</span><br><span class="line">      --link list                      Add link to another container</span><br><span class="line">      --link-local-ip list             Container IPv4/IPv6 link-local addresses</span><br><span class="line">      --log-driver string              Logging driver for the container</span><br><span class="line">      --log-opt list                   Log driver options</span><br><span class="line">      --mac-address string             Container MAC address (e.g., 92:d0:c6:0a:29:33)</span><br><span class="line">  -m, --memory bytes                   Memory limit</span><br><span class="line">      --memory-reservation bytes       Memory soft limit</span><br><span class="line">      --memory-swap bytes              Swap limit equal to memory plus swap: &apos;-1&apos; to enable unlimited swap</span><br><span class="line">      --memory-swappiness int          Tune container memory swappiness (0 to 100) (default -1)</span><br><span class="line">      --mount mount                    Attach a filesystem mount to the container</span><br><span class="line">      --name string                    Assign a name to the container</span><br><span class="line">      --network string                 Connect a container to a network (default &quot;default&quot;)</span><br><span class="line">      --network-alias list             Add network-scoped alias for the container</span><br><span class="line">      --no-healthcheck                 Disable any container-specified HEALTHCHECK</span><br><span class="line">      --oom-kill-disable               Disable OOM Killer</span><br><span class="line">      --oom-score-adj int              Tune host&apos;s OOM preferences (-1000 to 1000)</span><br><span class="line">      --pid string                     PID namespace to use</span><br><span class="line">      --pids-limit int                 Tune container pids limit (set -1 for unlimited)</span><br><span class="line">      --privileged                     Give extended privileges to this container</span><br><span class="line">  -p, --publish list                   Publish a container&apos;s port(s) to the host</span><br><span class="line">  -P, --publish-all                    Publish all exposed ports to random ports</span><br><span class="line">      --read-only                      Mount the container&apos;s root filesystem as read only</span><br><span class="line">      --restart string                 Restart policy to apply when a container exits (default &quot;no&quot;)</span><br><span class="line">      --rm                             Automatically remove the container when it exits</span><br><span class="line">      --runtime string                 Runtime to use for this container</span><br><span class="line">      --security-opt list              Security Options</span><br><span class="line">      --shm-size bytes                 Size of /dev/shm</span><br><span class="line">      --sig-proxy                      Proxy received signals to the process (default true)</span><br><span class="line">      --stop-signal string             Signal to stop a container (default &quot;SIGTERM&quot;)</span><br><span class="line">      --stop-timeout int               Timeout (in seconds) to stop a container</span><br><span class="line">      --storage-opt list               Storage driver options for the container</span><br><span class="line">      --sysctl map                     Sysctl options (default map[])</span><br><span class="line">      --tmpfs list                     Mount a tmpfs directory</span><br><span class="line">  -t, --tty                            Allocate a pseudo-TTY</span><br><span class="line">      --ulimit ulimit                  Ulimit options (default [])</span><br><span class="line">  -u, --user string                    Username or UID (format: &lt;name|uid&gt;[:&lt;group|gid&gt;])</span><br><span class="line">      --userns string                  User namespace to use</span><br><span class="line">      --uts string                     UTS namespace to use</span><br><span class="line">  -v, --volume list                    Bind mount a volume</span><br><span class="line">      --volume-driver string           Optional volume driver for the container</span><br><span class="line">      --volumes-from list              Mount volumes from the specified container(s)</span><br><span class="line">  -w, --workdir string                 Working directory inside the container</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/Spring源码解读(一)/">Spring源码阅读笔记(一)</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-10-03</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/spring/">spring</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="spring源码阅读笔记一">Spring源码阅读笔记(一)</h2>
+<h3 id="1-bean工程">1. Bean工程</h3>
+<h4 id="1-defaultlistenablebeanfactory">(1) DefaultListenableBeanFactory</h4>
+<p><figure class="figure"><img src="/img/article/spring/DefaultListableBeanFactory.png" alt=""></figure></p>
+<h4 id="2-xmlbeandefinitionreader">(2) XmlBeanDefinitionReader</h4>
+<p>主要包含以下几步的处理：</p>
+<ul>
+<li>通过继承自AbstractBeanDefinitionReader中的方法，来使用ResourceLoader将资源文件路径转换为对应的Resoure文件；</li>
+<li>通过DocumentLoader对Resource文件进行转换，将Resource文件转换为Document文件；</li>
+<li>通过实现接口BeanDefinitionDocumentReader的DefaultBeanDefinitionDocumentReader类对Document进行解析，并使用BeanDefinitionParserDelegate对Element进行解析。</li>
+</ul>
+<h4 id="3-xmlbeanfactory">(3) XmlBeanFactory</h4>
+<ul>
+<li>构造Resource资源文件的实例对象</li>
+<li><code>this.reader.loadBeanDefinitions(resource)</code>完成资源加载</li>
+</ul>
+<h5 id="resource是如何封装的呢"><code>Resource是如何封装的呢？</code></h5>
+<p>Resource接口抽象了所有Spring内部使用到的底层资源，包括：File/URL/Classpath等，并且提供了存在性、可读性、是否处于打开状态等方法，提供了不同资源到URL/URI/File类型的转换，以及基于当前资源创建一个相对资源的方法。</p>
+<ul>
+<li>
+<p><code>loadBeanDefinitions</code> —&gt; <code>doBeanDefinitions</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">			Document doc = doLoadDocument(inputSource, resource);</span><br><span class="line">			<span class="keyword">int</span> count = registerBeanDefinitions(doc, resource);</span><br><span class="line">			<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">				logger.debug(<span class="string">"Loaded "</span> + count + <span class="string">" bean definitions from "</span> + resource);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">return</span> count;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (BeanDefinitionStoreException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> ex;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (SAXParseException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> XmlBeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"Line "</span> + ex.getLineNumber() + <span class="string">" in XML document from "</span> + resource + <span class="string">" is invalid"</span>, ex);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (SAXException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> XmlBeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"XML document from "</span> + resource + <span class="string">" is invalid"</span>, ex);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (ParserConfigurationException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"Parser configuration exception parsing XML from "</span> + resource, ex);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"IOException parsing XML document from "</span> + resource, ex);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> BeanDefinitionStoreException(resource.getDescription(),</span><br><span class="line">					<span class="string">"Unexpected exception parsing XML document from "</span> + resource, ex);</span><br><span class="line">		&#125;</span><br></pre></td></tr></table></figure>
+<p><code>doBeanDefinitions</code>的主要工作：</p>
+<ul>
+<li>
+<p>获取XML的验证模式</p>
+</li>
+<li>
+<p>加载XML文件，并得到对应的Document；</p>
+</li>
+<li>
+<p>根据返回的Document注册Bean信息。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="获取xml的验证模式">获取XML的验证模式</h5>
+<p>XML文件的验证模式保证了XML文件的正确性，常用的有DTD和XSD两种。</p>
+<p>Spring用来检测验证模式的方法就是判断文本中是否包含DOCTYPE，如果包含就是DTD，否则就是XSD。</p>
+<h5 id="获取document">获取Document</h5>
+<p>通过SAX解析XML文档，并且EntityResolver使得程序能够在项目本身中寻找DTD声明，避免网络下载的漫长时间或网络中断造成的报错。</p>
+<h5 id="根据document注册bean信息">根据Document注册Bean信息</h5>
+
+	
+
+	
+
+</article>
+
+
+
+
+
+	<span class="different-posts">📖 <a href="/page/3">more posts</a> 📖</span>
+
+
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>Hi there, <br />welcome to my Blog glad you found it. Have a look around, will you?</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2020 WeilunZhou | Powered by <a href="https://hexo.io/">Hexo</a> | Theme <a href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

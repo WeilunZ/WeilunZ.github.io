@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>myrpc | WeilunZhou</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="WeilunZhou" type="application/atom+xml">
+    
+</head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/archives" class="header__link">Archive</a>
+			
+				<a href="/tags" class="header__link">Tags</a>
+			
+				<a href="/atom.xml" class="header__link">RSS</a>
+			
+		</nav>
+		<h1 class="header__title"><a href="/">WeilunZhou</a></h1>
+		<h2 class="header__subtitle">个人博客</h2>
+	</header>
+
+	<main>
+		<article>
+	
+		<h1>myrpc</h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2020-04-29</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/rpc/">rpc</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="myrpc">myrpc</h2>
+<p>实现了一款易用高性能的RPC框架，使用Go语言编写，实现服务注册、服务熔断降级、远程调用、协议定制、链路监控等功能。</p>
+<h4 id="1数据协议">1.数据协议</h4>
+<p><figure class="figure"><img src="https://user-gold-cdn.xitu.io/2020/4/11/17164dccda827bf1?imageslim" alt="img"><figcaption class="figure__caption">img</figcaption></figure></p>
+<h4 id="2">2.</h4>
+<h4 id="3-负载均衡">3. 负载均衡</h4>
+<ul>
+<li><strong>Round robin</strong>: The load balancer distributes connection requests to a pool of servers in a repeating loop, regardless of relative load or capacity. Server A, server B, server C, server A, server B, etc.</li>
+<li><strong>Weighted round robin</strong>: This is like the standard round robin, except for the fact that certain back end servers can be assigned to a higher priority, receiving disproportionally more traffic/requests. Server A, server A, server B, server C, server A, server A, server B, server C, etc.</li>
+<li><strong>Least connections</strong>: This algorithm is fairly self-explanatory; the load balancer sends a new request to the back end server with the least number of active connections.</li>
+<li><strong>Weighted least connections</strong>: This algorithm is like least connections, but certain back end servers can be assigned a higher priority, receiving disproportionally more traffic/requests. In a scenario where some back end servers have a larger or more performant resource configuration, you would use WLC to route them a greater share of the traffic.</li>
+<li><strong>Random</strong>: Requests are sent to back end servers in a completely random fashion. No considerations are made for load levels, connection count, etc.</li>
+</ul>
+
+	
+
+	
+		<span class="different-posts"><a href="/article/myrpc/" onclick="window.history.go(-1); return false;">⬅️ Go back </a></span>
+
+	
+
+</article>
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>Hi there, <br />welcome to my Blog glad you found it. Have a look around, will you?</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2020 WeilunZhou | Powered by <a href="https://hexo.io/">Hexo</a> | Theme <a href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>

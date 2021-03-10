@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="theme-color" content="#33474d">
+	<title>WeilunZhou</title>
+	<link rel="stylesheet" href="/css/style.css" />
+	
+      <link rel="alternate" href="/atom.xml" title="WeilunZhou" type="application/atom+xml">
+    
+</head>
+
+<body>
+
+	<header class="header">
+		<nav class="header__nav">
+			
+				<a href="/archives" class="header__link">Archive</a>
+			
+				<a href="/tags" class="header__link">Tags</a>
+			
+				<a href="/atom.xml" class="header__link">RSS</a>
+			
+		</nav>
+		<h1 class="header__title"><a href="/">WeilunZhou</a></h1>
+		<h2 class="header__subtitle">个人博客</h2>
+	</header>
+
+	<main>
+		
+	<span class="different-posts different-posts_earlier">📖 <a href="/page/2">earlier posts</a> 📖</span>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/ansible/">Ansible入门</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-10-03</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/ansible/">ansible</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="ansible快速入门">Ansible快速入门</h2>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/latest/index.html" target="_blank" rel="noopener"> Ansible官方文档</a></li>
+<li><a href="https://ansible-tran.readthedocs.io/en/latest/docs/" target="_blank" rel="noopener">Ansible中文指南</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html" target="_blank" rel="noopener">Ansible adhoc commands</a></li>
+</ul>
+<p><code>以下内容以kafka,zk部署为例</code></p>
+<h3 id="1inventory文件">1.Inventory文件</h3>
+<p>Ansible 可同时操作属于一个组的多台主机,组和主机之间的关系通过 inventory 文件配置. 默认的文件路径为 /etc/ansible/hosts</p>
+<p>除了默认文件外，还可以同时使用多个inventory文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[kafka-es-fraaws]</span><br><span class="line">&lt;kafka ip 1&gt; ansible_ssh_host=&lt;kafka ip 1&gt; ansible_ssh_user=deploy broker_id=0</span><br><span class="line">&lt;kafka ip 2&gt; ansible_ssh_host=&lt;kafka ip 2&gt; ansible_ssh_user=deploy broker_id=1</span><br><span class="line">&lt;kafka ip 3&gt; ansible_ssh_host=&lt;kafka ip 3&gt; ansible_ssh_user=deploy broker_id=2</span><br><span class="line"></span><br><span class="line">[kafka-es-sfo]</span><br><span class="line">&lt;kafka ip 4&gt; ansible_ssh_host=&lt;kafka ip 4&gt; ansible_ssh_user=deploy broker_id=0</span><br><span class="line">&lt;kafka ip 5&gt; ansible_ssh_host=&lt;kafka ip 5&gt; ansible_ssh_user=deploy broker_id=1</span><br><span class="line">&lt;kafka ip 6&gt; ansible_ssh_host=&lt;kafka ip 6&gt; ansible_ssh_user=deploy broker_id=2</span><br><span class="line"></span><br><span class="line">[kafka-es-sin]</span><br><span class="line">&lt;kafka ip 7&gt; ansible_ssh_host=&lt;kafka ip 7&gt; ansible_ssh_user=deploy broker_id=0</span><br><span class="line">&lt;kafka ip 8&gt; ansible_ssh_host=&lt;kafka ip 8&gt; ansible_ssh_user=deploy broker_id=1</span><br><span class="line">&lt;kafka ip 9&gt; ansible_ssh_host=&lt;kafka ip 9&gt; ansible_ssh_user=deploy broker_id=2</span><br><span class="line"></span><br><span class="line">[kafka-test]</span><br><span class="line">&lt;kafka ip 10&gt; ansible_ssh_host=&lt;kafka ip 10&gt; ansible_ssh_user=deploy broker_id=0</span><br><span class="line">&lt;kafka ip 11&gt; ansible_ssh_host=&lt;kafka ip 11&gt; ansible_ssh_user=deploy broker_id=1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>主机与组：[]内代表组名，用于对主机进行分类；</li>
+<li>ansible_ssh_host：有时我们想为主机起一个别名，而不是使用上面所示的ip，这时需要使用ansible_ssh_host指定别名所代表的ip；</li>
+<li>ansible_ssh_user：指定连接到目标host的哪个用户；</li>
+<li>主机变量： 给主机分配变量，如上例，为每一个主机分配broker_id，为了在配置文件中使用。</li>
+</ul>
+<p><code>其它Inventory相关知识可以前往官方文档或中文指南学习</code></p>
+<h3 id="2-ansible命令管理主机">2. Ansible命令管理主机</h3>
+<p>ansible提供命令行工具，官方起名为Ad-Hoc Commands，命令的格式是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible &lt;host-patterns&gt; [options]</span><br></pre></td></tr></table></figure>
+<p>常用的是检查所有远程主机环境是否可以被ansible主机访问：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ansible all -m ping</span><br></pre></td></tr></table></figure>
+<p>这里的all代表<code>目标为仓库(inventory)中的所有机器</code></p>
+<p>Patterns参考链接： <a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_patterns.html" target="_blank" rel="noopener">https://ansible-tran.readthedocs.io/en/latest/docs/intro_patterns.html</a></p>
+<p>其他命令模块参考链接： <a href="https://ansible-tran.readthedocs.io/en/latest/docs/intro_adhoc.html" target="_blank" rel="noopener">https://ansible-tran.readthedocs.io/en/latest/docs/intro_adhoc.html</a></p>
+<h3 id="3-playbook">3. Playbook</h3>
+<p>Playbooks 是 Ansible 的配置,部署,编排语言.他们可以被描述为一个需要希望远程主机执行命令的方案,或者一组IT程序运行的命令集合。在基础层面, playbooks 可以被用来管理用于部署到远程主机的配置文件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"> ── roles</span><br><span class="line">|    ├──jdk</span><br><span class="line">|    ├── kafka</span><br><span class="line">|    |    ├── files</span><br><span class="line">|    |    ├── handlers</span><br><span class="line">|    |    ├── tasks</span><br><span class="line">|    |    └── templates</span><br><span class="line">|    ├── zk</span><br><span class="line">|    └── es</span><br><span class="line">└── kafka-2.3.0.yml</span><br></pre></td></tr></table></figure>
+<p>playbook的简单目录结构如上图所示，yml中指定任务的name，roles,和变量。而在部署任务中，一般每个role都代表一个部署的应用或工具，其中包含了tasks任务列表，一个task会在其对应所有主机上执行完毕之后，下一个task才会执行，每个task的目标在于执行一个module。</p>
+<h3 id="定义variable变量">定义Variable（变量）</h3>
+<p><code>变量可以用来处理配置文件在每个节点中的个体差异和系统间的不同，以下介绍几种定义变量的形式</code></p>
+<p>（1）inventory定义变量</p>
+<p>在inventory文件中，每一个Host可以定义自己的变量，如上述Kakfa集群中每个节点的broker_id</p>
+<p>（2）在playbook中定义变量</p>
+<p>在playbook yml中可以定义变量，如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- hosts: webservers</span><br><span class="line">  vars:</span><br><span class="line">    http_port: 80</span><br></pre></td></tr></table></figure>
+<p>（3）在文件和role中定义变量（TODO）</p>
+<p>（4）Facts变量</p>
+<p>Facts变量是自动发现的而不是用户自己设置的，通过访问远程系统获取响应信息。</p>
+<p>比如获取当前主机的ip地址：<code></code></p>
+<p>（5）魔法变量</p>
+<p>ansible会自动提供一些变量，无需定义，这些变量中重要的有<code>hostvars</code>，<code>group_names</code>，<code>groups</code></p>
+<p>其中hostvars可以让我们访问其他主机的变量，group_names是当前主机所在所有群组的列表，groups是inventory中所有群组的列表，可以用于枚举群组中的所有主机，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for host in groups[&apos;app_servers&apos;] %&#125;</span><br><span class="line">   # something that applies to all app servers.</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+<p><code>在zookeeper的部署中zoo.cfg配置文件需要用到魔法变量</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;% for host in groups[group_names[0]] %&#125;</span><br><span class="line">server.&#123;&#123; hostvars[host][&apos;myid&apos;]&#125;&#125;=&#123;&#123;hostvars[host][&quot;ansible_eth0&quot;][&quot;ipv4&quot;][&quot;address&quot;]&#125;&#125;:2888:3888</span><br><span class="line">&#123;% endfor %&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="roles">Roles</h3>
+<p>每个组件或应用的部署可以整合成一个role，如jdk,kafka,zookeeper,es，在playbook yml中选定role去执行task</p>
+<h3 id="module">Module</h3>
+<p><a href="https://docs.ansible.com/ansible/latest/modules/modules_by_category.html" target="_blank" rel="noopener">https://docs.ansible.com/ansible/latest/modules/modules_by_category.html</a></p>
+<h3 id="4adhoc-commands">4.Adhoc Commands</h3>
+<p>examples:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ansible -i hosts_prod_lineudp rb-lineudp-transfer --private-key ~/.ssh/powerop_VMS29456 -u admin --become -m copy -a 'src=assets/monitor_udp6_state.sh dest=/opt/hickwall/shared/scripts'</span><br><span class="line"></span><br><span class="line">ansible -i hosts_prod_thrift rb-thrift-dashboard --private-key ~/.ssh/powerop_VMS29456 -u admin --become -m file -a 'dest=/var/log/deploy/dispatcher/thrift mode=755 owner=deploy group=deploy state=directory'</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/IDEA_annotation_template/">IDEA注释模板</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-09-21</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/IDEA/">IDEA</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="idea类和方法注释模板的配置">IDEA类和方法注释模板的配置</h2>
+<p>参考博客： <a href="https://blog.csdn.net/qq_34581118/article/details/78409782" target="_blank" rel="noopener">https://blog.csdn.net/qq_34581118/article/details/78409782</a></p>
+<h3 id="1生成类注释">1.生成类注释</h3>
+<ul>
+<li>打开Preferences</li>
+<li>Editor -&gt; File and Code Templates -&gt; Files -&gt; Class</li>
+</ul>
+<p><figure class="figure"><img src="/img/article/IDE/idea-class-comment.png" alt=""></figure></p>
+<ul>
+<li>生成注解类模板</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">* @program: $&#123;PROJECT_NAME&#125;</span><br><span class="line">*</span><br><span class="line">* @description: $&#123;description&#125;</span><br><span class="line">*</span><br><span class="line">* @author: Mr.Wang</span><br><span class="line">*</span><br><span class="line">* @create: $&#123;YEAR&#125;-$&#123;MONTH&#125;-$&#123;DAY&#125; $&#123;HOUR&#125;:$&#123;MINUTE&#125;</span><br><span class="line">**/</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2生成方法注释">2.生成方法注释</h3>
+<ul>
+<li>打开Preferences</li>
+<li>Editor -&gt; Live Templates -&gt; 点击右边加号为自己添加一个Templates Group -&gt; 然后选中自己的Group再次点击加号添加Live Templates</li>
+<li>然后设置自己喜欢的快捷键 在Abbreviation里面 记得在Applicable in 里面勾选,起码也要勾选class</li>
+<li>然后在Edit variables里面添加参数和返回值的自动取值</li>
+<li>然后再你的方法上面直接输入/ + 你设置的Abbreviation快捷键 + tab键就直接生成了 （我设置的是/+ a + tab）</li>
+</ul>
+<p><figure class="figure"><img src="/img/article/IDE/idea-function-comment.png" alt=""></figure></p>
+<ul>
+<li>生成方法注解模板</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">**</span><br><span class="line">* @Description: $description$</span><br><span class="line">* @Param: $params$</span><br><span class="line">* @return: $returns$</span><br><span class="line">* @Author: Mr.Wang</span><br><span class="line">* @Date: $date$</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/hexo+github/">hexo&amp;github搭建博客</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-09-14</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/blog/">blog</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h4 id="步骤">步骤</h4>
+<ul>
+<li>安装Node.js</li>
+<li>添加国内镜像源<br>
+<code>npm config set registry https://registry.npm.taobao.org</code></li>
+<li>安装git</li>
+<li>注册Github账号，并新建仓库<code>xxx.github.io</code>，其中<code>xxx</code>为你的Github用户名，随后在仓库Settings按钮点击后，往下拉可以看到Github Pages，点击链接后可以看到自己网页</li>
+<li>安装Hexo<br>
+<code>npm i hexo-cli -g</code><br>
+<code>hexo -v</code><br>
+<code>npm i hexo-deployer-git</code></li>
+<li>blog初始化<br>
+<code>hexo init</code>初始化文件夹<br>
+<code>npm install</code>安装必备组件</li>
+<li>安装插件<br>
+参考 <a href="https://github.com/blleng/hexo-theme-lx" target="_blank" rel="noopener">https://github.com/blleng/hexo-theme-lx</a></li>
+<li>修改配置<br>
+项目根目录下_config.yml文件中，修改最后一行的配置</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line"><span class="attr">  type:</span> <span class="string">git</span></span><br><span class="line"><span class="attr">  repository:</span> <span class="attr">https://github.com/WeilunZ/WeilunZ.github.io</span></span><br><span class="line"><span class="attr">  branch:</span> <span class="string">master</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>hexo三命令<br>
+<code>hexo g</code>生成静态网页<br>
+<code>hexo s</code>运行本地服务器<br>
+<code>hexo d</code>上传至github</p>
+</li>
+<li>
+<p>增加一个新文章<br>
+在项目目录下<code>hexo new post &quot;hexo博客搭建&quot;</code>，双引号内的为文章的title。</p>
+</li>
+</ul>
+<hr>
+<p>ps: 更多细节可以参考 <a href="https://zhuanlan.zhihu.com/p/35668237" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/35668237</a></p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/git/">Git快速入门</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-08-27</span><br />
+		
+		
+			<span class="article__tags">
+			  	<a class="article__tag-link" href="/tags/Git/">Git</a>
+			</span>
+		
+	</div>
+
+	
+
+	
+		<h2 id="git的工作示意图">git的工作示意图</h2>
+<p><figure class="figure"><img src="/img/article/git/git.png" alt="image"><figcaption class="figure__caption">image</figcaption></figure></p>
+<p>工作区间：我们自己创建的工程文件，在编辑器可直观显示。</p>
+<p>缓存区：提交代码，解决冲突的中转站，可以通过git shell窗口显示。</p>
+<p>本地仓库：连接本地跟远程大妈的枢纽，在不联网的情况下可以将本地的代码提交到本地仓库；缓存区是能在git shell窗口显示。</p>
+<p>远程仓库：保存我们代码的服务器，例如github，gitlab，可以登陆到服务器上看具体的信息。</p>
+<h4 id="正常提交代码的命令和解释">正常提交代码的命令和解释</h4>
+<p>//如果是本地新创建的项目，需要先执行git init,表示生成本地的git管理</p>
+<p><code>git add files</code>  --添加文件，实际开发中可以使用 <code>git add -A</code>，使用-A:将新增、删除、修改的文件改动全保存至缓存区。</p>
+<p><code>git commit -m &quot;comments&quot;</code> 将代码从缓存区保存至本地仓库，并添加说明文字。</p>
+<p>//如果是本地新创建的项目，git remote add origin XXXXXX 将本地仓库与指定的远程仓库创建联系。</p>
+<p><code>push -u origin master</code> 将本地仓库代码推送至远程仓库的master分支。</p>
+<h2 id="git常用命令的比较和分析">git常用命令的比较和分析</h2>
+<h4 id="git-clone-git-pull-git-fetch">git clone、git pull、git fetch</h4>
+<p>git clone url 将其他仓库克隆到本地，本地存放着与远程仓库一模一样的版本库记录。</p>
+<p>git pull是拉取远程分支更新到本地仓库的操作。git pull是相当于从远程仓库获取最新版本，然后再与本地分支merge（合并）。git pull = git fetch + git merge</p>
+<p>git fetch 更新远程代码到本地仓库。当前分支指向的FETCH_HEAD。FETCH_HEAD指的是: 某个branch在服务器上的最新状态。</p>
+<p><figure class="figure"><img src="/img/article/git/diff.png" alt="image"><figcaption class="figure__caption">image</figcaption></figure></p>
+<h4 id="git-diff">git diff</h4>
+<p>用于比较两次修改的差异</p>
+<p>git diff HEAD – <file>  查看工作区和版本库里面最新版本的区别</file></p>
+<h4 id="git-reset">git reset</h4>
+<p>git reset --hard HEAD^ 回退到上一个版本</p>
+<p>git reset --hard commitId(具体版本的id)  回退到指定版本</p>
+<h4 id="git-checkout">git checkout</h4>
+<p>git checkout – <file> 把文件在工作区制定文件的修改撤销</file></p>
+<p>git checkout . 把文件在工作区的修改全部撤销</p>
+<p>git checkout dev 切换到dev分支</p>
+<h4 id="git-branch">git branch</h4>
+<p>git branch 查看当前分支</p>
+<p>git branch -d dev 删除dev分支</p>
+<p>git checkout -b dev 创建dev分支，然后切换到dev分支</p>
+<p>git branch -a 查看远程分支和本地分支</p>
+<h4 id="git-merge">git merge</h4>
+<p>git merge dev把dev分支的工作成果合并到当前分支上</p>
+<h4 id="git-stash">git stash</h4>
+<p>把当前工作现场“储藏”起来，等以后恢复现场后继续工作</p>
+<p>git stash apply 恢复“储藏”起来文件，但是恢复后，stash内容并不删除</p>
+<p>git stash drop 删除“储藏”起来文件</p>
+<p>git stash pop 恢复“储藏”起来的文件，同时把stash内容也删了</p>
+<p>git stash apply stash@{num}  指定从存储列表中删除第几个，下标从0开始</p>
+
+	
+
+	
+
+</article>
+
+
+
+
+	<article>
+	
+		<h1><a href="/article/hello-world/">Hello World</a></h1>
+	
+	<div class="article__infos">
+		<span class="article__date">2019-06-23</span><br />
+		
+		
+	</div>
+
+	
+
+	
+		<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="quick-start">Quick Start</h2>
+<h3 id="create-a-new-post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="run-server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="generate-static-files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="deploy-to-remote-sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+	
+
+	
+
+</article>
+
+
+
+
+
+
+	<span class="different-posts">📕 end of posts 📕</span>
+
+
+	</main>
+
+	<footer class="footer">
+	<div class="footer-content">
+		
+	      <div class="footer__element">
+	<p>Hi there, <br />welcome to my Blog glad you found it. Have a look around, will you?</p>
+</div>
+
+	    
+	      <div class="footer__element">
+	<h5>Check out</h5>
+	<ul class="footer-links">
+		<li class="footer-links__link"><a href="/archives">Archive</a></li>
+		
+		  <li class="footer-links__link"><a href="/atom.xml">RSS</a></li>
+	    
+		<li class="footer-links__link"><a href="/about">about page</a></li>
+		<li class="footer-links__link"><a href="/tags">Tags</a></li>
+		<li class="footer-links__link"><a href="/categories">Categories</a></li>
+	</ul>
+</div>
+
+	    
+
+		<div class="footer-credit">
+			<span>© 2020 WeilunZhou | Powered by <a href="https://hexo.io/">Hexo</a> | Theme <a href="https://github.com/HoverBaum/meilidu-hexo">MeiliDu</a></span>
+		</div>
+
+	</div>
+
+
+</footer>
+
+
+
+</body>
+
+</html>
