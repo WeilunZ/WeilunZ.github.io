@@ -10,7 +10,7 @@
   
   <title>
     
-      Netty | WeilunZhou
+      raft | WeilunZhou
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -145,8 +145,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>Netty</h2>
-  <p class="post-date">2021-03-07</p>
+  <h2>raft</h2>
+  <p class="post-date">2021-05-07</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -154,18 +154,36 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><h3 id="1netty的线程模型">1.Netty的线程模型</h3>
-<p>1.Reactor线程模型</p>
+    <section class="markdown-content"><h2 id="raft是什么">Raft是什么？</h2>
+<p>要想理解Raft是什么，首先我们需要认识一个概念<code>分布式共识</code>：</p>
+<p>举个生活中的例子，假如小明和小王出去聚合，小王提议喝一杯咖啡，小明表示同意，两人就<code>喝杯咖啡</code>这个问题达成了共识，并根据这个结果采取行动，这就是生活中的共识。</p>
+<p>在分布式系统中，共识就是系统中的多个节点对某个值达成一致，一个分布式系统包含n个进程{0,1,2,…n-1}，假设有一份数据，在n个进程中有m个副本，我们常说的一致性问题就是：对于同一个数据的多个副本之间，如何保持其对外表现的数据一致性，举例说明：</p>
 <ul>
-<li>单线程</li>
-<li>线程池</li>
-<li>主从线程池：一组线程池接收请求，一组线程池处理IO</li>
-<li></li>
+<li>数据X有两个副本，分别保存在节点M和节点N上；</li>
+<li>客户端A修改了节点N上的数据X；</li>
+<li>一段时间后，客户端B读取在M节点上的数据X；</li>
 </ul>
-<h3 id="2-netty服务端启动过程">2. Netty服务端启动过程</h3>
-<p>[1] 创建服务端Channel</p>
+<p><strong>一致性问题就是要研究客户端B怎样能读取到客户端A做的修改，然后两者之间的数据可以达成一致，即<code>共识</code></strong>。</p>
+<p>Raft就是一个为了实现分布式共识的协议。</p>
+<h2 id="raft中的成员身份">Raft中的成员身份</h2>
+<p>在Raft协议的定义中，一个节点成员有3种身份，分别是：</p>
+<ul>
+<li>Follower (跟随者)</li>
+<li>Candidate (候选人)</li>
+<li>Leader (领导)</li>
+</ul>
+<p>![image-20210507135747639](/Users/zhouweilun/Library/Application Support/typora-user-images/image-20210507135747639.png)</p>
 </section>
     <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#分布式" >
+    <span class="tag-code">分布式</span>
+  </a>
+
+      </div>
     
     <!-- Tags END -->
     <!-- NAV START -->
@@ -173,20 +191,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/article/linux-read/">
+      <a class="nav-left" href="/article/os-campus/">
         <span class="nav-arrow">← </span>
-        
-          Linux源码阅读(vfs)
-        
-      </a>
-    
-    
-      <a class="nav-right" href="/article/os-campus/">
         
           os campus
         
-        <span class="nav-arrow"> →</span>
       </a>
+    
     
   </div>
 
@@ -232,7 +243,7 @@
   <div class="toc-main">
     <strong class="toc-title">Catalog</strong>
     
-      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#1netty的线程模型"><span class="toc-nav-text">1.Netty&#x7684;&#x7EBF;&#x7A0B;&#x6A21;&#x578B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#2-netty服务端启动过程"><span class="toc-nav-text">2. Netty&#x670D;&#x52A1;&#x7AEF;&#x542F;&#x52A8;&#x8FC7;&#x7A0B;</span></a></li></ol>
+      <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#raft是什么"><span class="toc-nav-text">Raft&#x662F;&#x4EC0;&#x4E48;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#raft中的成员身份"><span class="toc-nav-text">Raft&#x4E2D;&#x7684;&#x6210;&#x5458;&#x8EAB;&#x4EFD;</span></a></li></ol>
     
   </div>
 </aside>
@@ -242,7 +253,7 @@
 
 <script>
   (function () {
-    var url = 'http://&lt;www class=&quot;WeilunZhou&quot;&gt;  &lt;/www&gt;.com/article/netty/';
+    var url = 'http://&lt;www class=&quot;WeilunZhou&quot;&gt;  &lt;/www&gt;.com/article/raft/';
     var banner = 'undefined'
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({
@@ -304,7 +315,7 @@
     var gitmentConfig = "yanm1ng";
     if (gitmentConfig !== 'undefined') {
       var gitment = new Gitment({
-        id: "Netty",
+        id: "raft",
         owner: "yanm1ng",
         repo: "yanm1ng.github.io",
         oauth: {

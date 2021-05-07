@@ -7,8 +7,24 @@
     </url>
 
     <url>
+        <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/raft/</loc>
+        <lastmod>2021-05-07T05:57:53.697Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/os-campus/</loc>
+        <lastmod>2021-04-10T03:05:41.799Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://%3Cwww%20class=%22WeilunZhou%22%3E%20%20%3C/www%3E.com/article/netty/</loc>
-        <lastmod>2021-03-07T10:45:08.736Z</lastmod>
+        <lastmod>2021-03-12T14:00:36.722Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
